@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta name="viewport" content="width=device-width", initial-scale="1">
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Wortuhr Konfiguration</title>
+    </head>
+    <body>
+        <div class="title-bar">
+            <h1>Konfiguration der Wortuhr</h1>
+        </div>
+        <div id="wortuhrCfgMain">
+            <p>
+                <label>
+                    {{ hostnameText }}
+{{ ipOfWortuhr }}
+                    <input type="text" v-model="hostname">
+                </label>
+            </p>
+            <p>
+                <label>
+                    {{ nightOffActiveText }}
+                    <input type="checkbox" v-model="nightOffActive">
+                </label>
+            </p>
+            <p v-if="nightOffActive">
+                <label>
+                    {{ nightOffTimeText }}
+                    <input type="time" v-model="nightOffTime">
+                </label>
+            </p>
+            <p v-if="nightOffActive">
+                <label>
+                    {{ nightOnTimeText }}
+                    <input type="time" v-model="nightOnTime">
+                </label>
+            </p>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
