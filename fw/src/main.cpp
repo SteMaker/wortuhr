@@ -43,6 +43,7 @@ void setupForInitialConfig(void) {
   Serial.println(WiFi.softAPIP());
 
   ledCtrl.setup(persistent.color().r, persistent.color().g, persistent.color().b);
+  ledCtrl.showNoWlan();
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     Serial.println("Client connected");
@@ -78,6 +79,9 @@ void setupForNormal(void) {
   Serial.print("Connecting to SSID: ");
   Serial.println(persistent.ssid());
 
+  ledCtrl.setup(persistent.color().r, persistent.color().g, persistent.color().b);
+  ledCtrl.showNoWlan();
+
   // Set WiFi to station mode and disconnect from an AP if it was previously
   // connected
   WiFi.mode(WIFI_STA);
@@ -87,7 +91,7 @@ void setupForNormal(void) {
     Serial.print(".");
   }
 
-  ledCtrl.setup(persistent.color().r, persistent.color().g, persistent.color().b);
+  ledCtrl.showWlan();
   ota.setup();
   timeGetter.setup();
 
@@ -158,6 +162,7 @@ void setupForNormal(void) {
           c.b = jsonObj["colorBlue"];
         }
         persistent.color(c);
+        ledCtrl.setColor(c.r, c.g, c.b);
 
         Persistent::NightOff no;
         if (jsonObj.containsKey("nightOffActive")) {
@@ -212,7 +217,14 @@ void setupForNormal(void) {
         if (jsonObj.containsKey("colorBlue")) {
           b = jsonObj["colorBlue"];
         }
+        Serial.print("New Color: ");
+        Serial.print(r);
+        Serial.print(" ");
+        Serial.print(g);
+        Serial.print(" ");
+        Serial.print(b);
         ledCtrl.setColor(r, g, b);
+        ledCtrl.forceUpdate = true;
       });
   server.addHandler(colorHandler);
 

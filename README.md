@@ -1,2 +1,29 @@
-# wortuhr
-Wortuhr basierend auf ESP-12F incl. Firmware, PCB und Hardware-Beschreibung
+# Wortuhr
+Wortuhr basierend auf ESP-12F incl. Firmware, PCB und Hardware-Beschreibung.
+
+Bitte beachten: Ich arbeite noch an dem Projekt, es sind nicht alle Funktionen implementiert und ich habe auch noch nicht alles ausprobiert (z.B. das PCB). Es kann durchaus sein, dass die HW nicht funktioniert.
+
+Ich übernomme keinerlei Verantwortung für die Funktionsfähigkeit und Sicherheit dieses Projekts. Jeder der es nachbaut ist selbst dafür verantwortlich.
+
+Die Idee und insbesondere die Anordnung der Buchstaben habe ich mir im FabLab Nürnberg abgeschaut. Vielen Dank an der Stelle an den Unbekannten :)
+
+Die Hardware besteht aus 11 LED-Streifen á 11 LEDs, die RGB fähig sind. Als controller dient ein ESP8266, der sich die Uhrzeit über das Internet per NTP holt. Die Konfiguration wird über ein webinterface vorgenommen. Ein Helligkeitssensor wird verwendet, um die Helligkeit der Uhr (falls gewünscht) automatisch anzupassen. Es gibt auch eine Möglichkeit die Uhr zu einer bestimmten Zeit dunkel zu schalten, und zu einer anderen Zeit wieder zu aktivieren. Ausserdem kann man die Farbe der LEDs einstellen.
+
+## Aufbau
+Als LED Streifen werden WD2812 verwendet. Für jede der 11 Zeilen wird ein Streifen mit 11 LEDs verwendet. Die Spannungsversorgung habe ich für jeden Streifen einzeln auf die Hauptplatine gezogen, die Datenleitung muss von Dout des einen Streifens zum Din des Streifens der nächsten Zeile gezogen werden. Der Din der ersten Zeile muss rechts oben liegen und wird mit dem controller verbunden. Von der linken Seite der ersten Zeile geht dann der Dout zum Din der linken Seite des zweiten Streifens, usw. Das ist wichtig, da sonst die falschen Buchstaben aufleuchten.
+
+Die Buchstabenmatrix habe ich mit einem 3D-Drucker ausgedruckt, die STL Dateien, als auch die SVG Basis liegen im Ordner rahmen. Es gibt eine Rückseite, in die die 11 LED-Streifen geklebt werden und eine Vorderseite mit den Aussparungen für die Buchstaben. Das Ganze kommt dann in einen Bilderrahmen. Beim Aufkleben der LED Streifen muss man beachten, dass Din der ungeraden Zeilen rechts liegt, Din der geraden Zeilen links. Falls man hier einen Fehler macht, kann man das in der FW aber anpassen. Die Vorderseite kommt einfach oben drauf und das Ganze dann in einen Bilderrahmen (ich plane zur Zeit Ikea Ribba 23x23). Zwischen die Scheibe des Rahmens und die Buchstabenmatrix kommt Brotpapier (oder ähnliches), um das Licht schöner zu verteilen.
+![alt text](https://raw.githubusercontent.com/stemaker/wortuhr/master/buchstabenmatrix.jpg "Buchstabenmatrix")
+![alt text](https://raw.githubusercontent.com/stemaker/wortuhr/master/leds.jpg "Aufgeklebte und verlötetet LED Streifen")
+
+Für den ESP8266 und ein wenig Beschaltung gibt es ein KiCad Projekt im Ordner PCB. Die Spannungsversorgung aller 11 Streifen wird auf der Platine zusammengeführt. Als Netzteil verwende ich ein 5V, 4A Steckernetzteil. Man sollte darauf achten, dass es kurzschlussfest ist. Es gibt aber zur Sicherheit auch noch eine 4A Sicherung auf dem PCB. Wenn alle LEDs auf maximaler Helligkeit stehen - und das sollte nie der Fall sein - dann werden deutlich mehr als 4A gezogen.
+
+Zum flashen des ESP8266 und um die Uhr auf "Werkseinstellungen" zurückzusetzen gibt es Taster auf dem PCB.
+
+## Inbetriebnahme
+Wenn die Uhr keine WLAN Konfiguration hat, dann erstellt sie automatisch einen WLAN accesspoint. Mit einem PC oder Smartphone muss man sich mit diesem WLAN access point verbinden. Dazu das WLAN mit dem Namen WORTUHR_AP suchen und verbinden. In einem web browser die IP Addresse 192.168.25.1 eingeben und über das web interface die SSID und das WLAN Passwort seines eigenen WLANs eingeben. Nach dem speichern dieser Einstellungen macht der controller einen reset und sollte sich automatisch mit dem
+eigenen WLAN verbinden. Kurze Zeit später erscheint (hoffentlich) die aktuelle Uhrzeit.
+
+Um sich mit der Konfigurationsseite der Uhr zu verbinden muss man die IP Addresse der Uhr herausfinden. In den meisten Fällen findet man die auf der Konfigurationsseite seines DSL/Kabel-Modems - vorausgesetzt das ist auch der DHCP Server. Hier könnte man in Zukunft die IP Addresse mit Hilfe der Zahlenwörter Stelle für Stelle durchgeben.
+
+Durch Eingabe dieser IP Addresse im web browser gelangt man auf die (hoffentlich) selbst erklärende Einstellungsseite.
