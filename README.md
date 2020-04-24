@@ -7,16 +7,16 @@ Ich übernomme keinerlei Verantwortung für die Funktionsfähigkeit und Sicherhe
 
 Die Idee und insbesondere die Anordnung der Buchstaben habe ich mir im FabLab Nürnberg abgeschaut. Vielen Dank an der Stelle an den Unbekannten :)
 
-Die Hardware besteht aus 11 LED-Streifen á 11 LEDs, die RGB fähig sind. Als controller dient ein ESP8266, der sich die Uhrzeit über das Internet per NTP holt. Die Konfiguration wird über ein webinterface vorgenommen. Ein Helligkeitssensor wird verwendet, um die Helligkeit der Uhr (falls gewünscht) automatisch anzupassen. Es gibt auch eine Möglichkeit die Uhr zu einer bestimmten Zeit dunkel zu schalten, und zu einer anderen Zeit wieder zu aktivieren. Ausserdem kann man die Farbe der LEDs einstellen.
+Die Hardware besteht aus 11 LED-Streifen á 11 LEDs, die RGB fähig sind. Als controller dient ein ESP-12F (ESP8266), der sich die Uhrzeit über das Internet per NTP holt. Die Konfiguration wird über ein webinterface vorgenommen. Ein Helligkeitssensor wird verwendet, um die Helligkeit der Uhr (falls gewünscht) automatisch anzupassen. Es gibt auch eine Möglichkeit die Uhr zu einer bestimmten Zeit dunkel zu schalten, und zu einer anderen Zeit wieder zu aktivieren. Ausserdem kann man die Farbe der LEDs einstellen.
 
 ## Aufbau
 Als LED Streifen werden WD2812 verwendet. Für jede der 11 Zeilen wird ein Streifen mit 11 LEDs verwendet. Die Spannungsversorgung habe ich für jeden Streifen einzeln auf die Hauptplatine gezogen, die Datenleitung muss von Dout des einen Streifens zum Din des Streifens der nächsten Zeile gezogen werden. Der Din der ersten Zeile muss rechts oben liegen und wird mit dem controller verbunden. Von der linken Seite der ersten Zeile geht dann der Dout zum Din der linken Seite des zweiten Streifens, usw. Das ist wichtig, da sonst die falschen Buchstaben aufleuchten.
 
 Die Buchstabenmatrix habe ich mit einem 3D-Drucker ausgedruckt, die STL Dateien, als auch die SVG Basis liegen im Ordner rahmen. Es gibt eine Rückseite, in die die 11 LED-Streifen geklebt werden und eine Vorderseite mit den Aussparungen für die Buchstaben. Das Ganze kommt dann in einen Bilderrahmen. Beim Aufkleben der LED Streifen muss man beachten, dass Din der ungeraden Zeilen rechts liegt, Din der geraden Zeilen links. Falls man hier einen Fehler macht, kann man das in der FW aber anpassen. Die Vorderseite kommt einfach oben drauf und das Ganze dann in einen Bilderrahmen (ich plane zur Zeit Ikea Ribba 23x23). Zwischen die Scheibe des Rahmens und die Buchstabenmatrix kommt Brotpapier (oder ähnliches), um das Licht schöner zu verteilen.
-![alt text](https://raw.githubusercontent.com/stemaker/wortuhr/master/buchstabenmatrix.jpg "Buchstabenmatrix")
-![alt text](https://raw.githubusercontent.com/stemaker/wortuhr/master/leds.jpg "Aufgeklebte und verlötetet LED Streifen")
+![alt text](./pics/buchstabenmatrix.jpg "Buchstabenmatrix")
+![alt text](./pics/leds.jpg "Aufgeklebte und verlötetet LED Streifen")
 
-Für den ESP8266 und ein wenig Beschaltung gibt es ein KiCad Projekt im Ordner PCB. Die Spannungsversorgung aller 11 Streifen wird auf der Platine zusammengeführt. Als Netzteil verwende ich ein 5V, 4A Steckernetzteil. Man sollte darauf achten, dass es kurzschlussfest ist. Es gibt aber zur Sicherheit auch noch eine 4A Sicherung auf dem PCB. Wenn alle LEDs auf maximaler Helligkeit stehen - und das sollte nie der Fall sein - dann werden deutlich mehr als 4A gezogen.
+Für den ESP-12F und ein wenig Beschaltung gibt es ein KiCad Projekt im Ordner PCB. Die Spannungsversorgung aller 11 Streifen wird auf der Platine zusammengeführt. Als Netzteil verwende ich ein 5V, 4A Steckernetzteil. Man sollte darauf achten, dass es kurzschlussfest ist. Es gibt aber zur Sicherheit auch noch eine 4A Sicherung auf dem PCB. Wenn alle LEDs auf maximaler Helligkeit stehen - und das sollte nie der Fall sein - dann werden deutlich mehr als 4A gezogen!
 
 Zum flashen des ESP8266 und um die Uhr auf "Werkseinstellungen" zurückzusetzen gibt es Taster auf dem PCB.
 
