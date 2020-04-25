@@ -18,12 +18,30 @@ Die Buchstabenmatrix habe ich mit einem 3D-Drucker ausgedruckt, die STL Dateien,
 
 Für den ESP-12F und ein wenig Beschaltung gibt es ein KiCad Projekt im Ordner PCB. Die Spannungsversorgung aller 11 Streifen wird auf der Platine zusammengeführt. Als Netzteil verwende ich ein 5V, 4A Steckernetzteil. Man sollte darauf achten, dass es kurzschlussfest ist. Es gibt aber zur Sicherheit auch noch eine 4A Sicherung auf dem PCB. Wenn alle LEDs auf maximaler Helligkeit stehen - und das sollte nie der Fall sein - dann werden deutlich mehr als 4A gezogen!
 
+Bei der ersten Version des PCB (siehe Foto) war das shape der Wago-Klemme gespiegelt. Deshalb sieht man einen 3-poligen Stecker. Generell ist diese Klemme aber relativ ungeeignet, da die Kabel tendeziell zu dick sind für die Klemme. Ich werde in einer nächsten Version die Klemme austauschen.
+![alt text](./pics/pcb1.jpg "PCB erste Version, ohne LED-Anschlüsse")
+
 Zum flashen des ESP8266 und um die Uhr auf "Werkseinstellungen" zurückzusetzen gibt es Taster auf dem PCB.
 
 ## Inbetriebnahme
-Wenn die Uhr keine WLAN Konfiguration hat, dann erstellt sie automatisch einen WLAN accesspoint. Mit einem PC oder Smartphone muss man sich mit diesem WLAN access point verbinden. Dazu das WLAN mit dem Namen WORTUHR_AP suchen und verbinden. In einem web browser die IP Addresse 192.168.25.1 eingeben und über das web interface die SSID und das WLAN Passwort seines eigenen WLANs eingeben. Nach dem speichern dieser Einstellungen macht der controller einen reset und sollte sich automatisch mit dem
-eigenen WLAN verbinden. Kurze Zeit später erscheint (hoffentlich) die aktuelle Uhrzeit.
+### Erstmaliges Flashen
+Die Firmware kann mit PlatformIO gebaut werden. Ich verwende VSCode mit dem PlatformIO plugin. Die firmware verwendet folgende libraries, die beim Bauen der Firmware automatisch installiert werden sollten:
+  * https://github.com/arduino-libraries/NTPClient
+  * https://github.com/FastLED/FastLED
+  * https://github.com/me-no-dev/ESPAsyncWebServer.git
+  * https://github.com/jwrw/ESP_EEPROM.git
+  * https://github.com/hideakitai/CRC.git
 
+Das erstmalige Flashen muss über die serielle Schnittstelle (3-pin header nebem dem ESP-12F) durchgeführt werden. Nachfolgende updates der firmware können auch über WLAN eingespielt werden. Für das flashen über die serielle Schnittstelle müssen in der Datei platformio.ini die Zeile upload_protocol und upload_port auskommentiert werden - ansonsten wird versucht über WLAN (OTA) zu flashen. Sobald platformio versucht zu flashen, die Taste flash drücken und gedrückt halten, reset drücken und loslassen und flash loslassen. Dnach sollte der Fortschritt des Software Downloads angezeigt werden. Wenn man später über WLAN flashen will muss man die zwei Zeilen in platformio.ini wieder mit reinnehmen und die IP Addresse der Wortuhr anpassen.
+
+Sobald man die Spannungsversorgung ab- und wieder einschaltet läuft die Firmware hoch.
+
+### WLAN Konfiguration
+Wenn die Uhr keine WLAN Konfiguration hat, dann erstellt sie automatisch einen WLAN accesspoint. Mit einem PC oder Smartphone muss man sich mit diesem WLAN access point verbinden. Dazu das WLAN mit dem Namen WORTUHR_AP suchen und verbinden. In einem web browser die IP Addresse 192.168.25.1 eingeben und über das web interface die SSID und das WLAN Passwort seines eigenen WLANs eingeben. Nach dem speichern dieser Einstellungen macht der controller einen reset und sollte sich automatisch mit dem eigenen WLAN verbinden. Kurze Zeit später erscheint (hoffentlich) die aktuelle Uhrzeit.
+
+Der access point wird nach 15 Minuten automatisch abgeschaltet, egal ob sich jemand verbunden hat oder nicht. Um ihn wieder zu aktivieren, muss die Uhr neu gestartet werden.
+
+### Weitere Konfiguration
 Um sich mit der Konfigurationsseite der Uhr zu verbinden muss man die IP Addresse der Uhr herausfinden. In den meisten Fällen findet man die auf der Konfigurationsseite seines DSL/Kabel-Modems - vorausgesetzt das ist auch der DHCP Server. Hier könnte man in Zukunft die IP Addresse mit Hilfe der Zahlenwörter Stelle für Stelle durchgeben.
 
 Durch Eingabe dieser IP Addresse im web browser gelangt man auf die (hoffentlich) selbst erklärende Einstellungsseite.

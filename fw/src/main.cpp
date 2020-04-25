@@ -24,6 +24,12 @@ TimeGetter timeGetter;
 AsyncWebServer server(80);
 Persistent persistent;
 
+bool factoryReset = false;
+
+void ICACHE_RAM_ATTR cfgBtnPressed(void) {
+  factoryReset = true;
+}
+
 void notFound(AsyncWebServerRequest *request) {
   request->send(404, "text/plain", "Not found");
 }
@@ -43,7 +49,7 @@ void setupForInitialConfig(void) {
   Serial.println(WiFi.softAPIP());
 
   ledCtrl.setup(persistent.color().r, persistent.color().g, persistent.color().b);
-  ledCtrl.showNoWlan();
+  ledCtrl.showWlan();
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     Serial.println("Client connected");
@@ -90,8 +96,8 @@ void setupForNormal(void) {
     delay(500);
     Serial.print(".");
   }
-
   ledCtrl.showWlan();
+
   ota.setup();
   timeGetter.setup();
 
@@ -245,11 +251,21 @@ void setup() {
     server.onNotFound(notFound);
     server.begin();
 
+    pinMode(14, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(14), cfgBtnPressed, FALLING);
+
     Serial.println("Setup done");
 }
 
 void loop() {
     ota.loop();
+    if(factoryReset) {
+      factoryReset = false;
+      ledCtrl.clear();
+      persistent.factoryReset();
+      ESP.restart();
+    }
+
     if (mode == MODE_NORMAL) {
       int h;
       int m;
@@ -259,5 +275,17 @@ void loop() {
       ledCtrl.setClock(h, m);
 
       delay(100);
+    } else {
+      static unsigned int timeout = 15*60*2;
+      timeout--;
+      if(!timeout) {
+        // Disable the softAP after 15 minutes
+        Serial.println("Disabling softAP");
+        ledCtrl.showNoWlan();
+        WiFi.mode(WIFI_OFF);
+        WiFi.forceSleepBegin();
+      }
+      delay(500);
     }
+
 }

@@ -93,7 +93,12 @@ class LedCtrl {
     }
   }
 
+  void clear(void) {
+      clearClockLeds();
+  }
+
   void showNoWlan(void) {
+      Serial.println("showNoWlan");
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_NOWLAN].pattern;
       int letterCnt = 0;
@@ -103,6 +108,7 @@ class LedCtrl {
       }
       prevWordIndices[0] = WORDIDX_NOWLAN;
       prevWordIndices[1] = WORDIDX_STOP;
+      FastLED.show();
   }
 
   void showWlan(void) {
@@ -115,6 +121,7 @@ class LedCtrl {
       }
       prevWordIndices[0] = WORDIDX_WLAN;
       prevWordIndices[1] = WORDIDX_STOP;
+      FastLED.show();
   }
 
  private:
