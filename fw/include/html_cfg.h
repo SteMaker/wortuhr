@@ -45,17 +45,16 @@ const char htmlCfg[] PROGMEM = R"=====(
     <hr />
     <p>
         <label><span>LED Rotwert (0..255): {{ colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorRed">
+        <input type="range" min="0" max="255" v-model="colorRed" v-on:input="onColorChange($event)">
     </p>
     <p>
         <label><span>LED Grünwert (0..255): {{ colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorGreen">
+        <input type="range" min="0" max="255" v-model="colorGreen" v-on:input="onColorChange($event)">
     </p>
     <p>
         <label><span>LED Blauwert (0..255): {{ colorBlue }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorBlue">
+        <input type="range" min="0" max="255" v-model="colorBlue" v-on:input="onColorChange($event)">
     </p>
-    <input type="button" id="btnColor" value="Testen">
     <hr />
     <p>
         <label>Wortuhr in der Nacht abschalten</label>
@@ -102,6 +101,22 @@ const char htmlCfg[] PROGMEM = R"=====(
                 dimActive: false,
                 dimBase: 0,
                 dimScale: 0
+            },
+            methods: {
+                onColorChange() {
+                    console.log("changing color");
+                    axios.post('/color', {
+                        colorRed: cfgParams.colorRed,
+                        colorGreen: cfgParams.colorGreen,
+                        colorBlue: cfgParams.colorBlue
+                    })
+                        .then(function (response) {
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                       });
+                }
             },
             mounted () {
                 axios.get('/config')
@@ -150,19 +165,6 @@ const char htmlCfg[] PROGMEM = R"=====(
               .catch(function (error) {
                   console.log(error);
               });
-        });
-        $('#btnColor').click(function(){
-            axios.post('/color', {
-              colorRed: cfgParams.colorRed,
-              colorGreen: cfgParams.colorGreen,
-              colorBlue: cfgParams.colorBlue
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-            });
         });
     </script
 </body>

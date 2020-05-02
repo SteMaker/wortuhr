@@ -91,6 +91,8 @@ void setupForNormal(void) {
   // Set WiFi to station mode and disconnect from an AP if it was previously
   // connected
   WiFi.mode(WIFI_STA);
+  if(strcmp(persistent.hostname(), ""))
+      WiFi.hostname(persistent.hostname());
   WiFi.begin(persistent.ssid(), persistent.wifiPwd());
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -203,10 +205,11 @@ void setupForNormal(void) {
 
         persistent.updateToFlash();
         ledCtrl.forceUpdate = true;
+        request->send(200, "application/json", "{}");
       });
   server.addHandler(cfgHandler);
 
-  // testing color
+  // color
   AsyncCallbackJsonWebHandler *colorHandler = new AsyncCallbackJsonWebHandler(
       "/color", [](AsyncWebServerRequest *request, JsonVariant &json) {
         Serial.println("Color received");
@@ -231,6 +234,7 @@ void setupForNormal(void) {
         Serial.print(b);
         ledCtrl.setColor(r, g, b);
         ledCtrl.forceUpdate = true;
+        request->send(200, "application/json", "{}");
       });
   server.addHandler(colorHandler);
 
@@ -299,7 +303,7 @@ void loop() {
       if (withinActiveTimeWindow(h, m)) ledCtrl.setClock(h, m);
       else ledCtrl.clear();
 
-      delay(300);
+      //delay(300);
     } else {
       static unsigned int timeout = 15*60*2;
       timeout--;
