@@ -257,6 +257,30 @@ void setup() {
     Serial.println("Setup done");
 }
 
+// is (h2:m2) later or equal (h1:m1)
+bool isLaterEqual(int h1, int m1, int h2, int m2) {
+  if( (h2 > h1) || ((h2 == h1) && (m2 > m1)) || ((h2 == h1) && (m2 == m1)) )
+      return true;
+  return false;
+}
+
+bool withinActiveTimeWindow(int hour, int minute) {
+  Persistent::NightOff no = persistent.nightOff();
+  if(!no.active) return true;
+  if(!isLaterEqual(no.offHour, no.offMinute, no.onHour, no.onMinute)) {
+    // off time crosses midnight
+    if(isLaterEqual(no.offHour, no.offMinute, hour, minute) ||
+       !isLaterEqual(no.onHour, no.onMinute, hour, minute))
+       return false;
+    return true;
+  } else {
+    if(isLaterEqual(no.offHour, no.offMinute, hour, minute) &&
+       !isLaterEqual(no.onHour, no.onMinute, hour, minute))
+       return false;
+    return true;
+  }
+}
+
 void loop() {
     ota.loop();
     if(factoryReset) {
@@ -272,9 +296,10 @@ void loop() {
       timeGetter.getTime(h, m);
 
       h += persistent.timeZoneOffset() + (persistent.dayLightSaving()?1:0);
-      ledCtrl.setClock(h, m);
+      if (withinActiveTimeWindow(h, m)) ledCtrl.setClock(h, m);
+      else ledCtrl.clear();
 
-      delay(100);
+      delay(300);
     } else {
       static unsigned int timeout = 15*60*2;
       timeout--;

@@ -1,15 +1,15 @@
 /*
-ZWEINEDREIZ
-VIERONFUNFE
-SECHSIEBENH
-ACHTWLANEUN
-MINOVORNACH
-DREIVIERTEL
-HALBIZWEINS
-SIEBENSECHS
-FUNFRDRACHT
-NEUNDEIZEHN
-ELFZWOLFUHR
+  10 | ZWEINEDREIZ | 0
+  11 | VIERONFUNFE | 21
+  32 | SECHSIEBENH | 22
+  33 | ACHTWLANEUN | 43
+  54 | MINOVORNACH | 44
+  55 | DREIVIERTEL | 65
+  76 | HALBIZWEINS | 66
+  77 | SIEBENSECHS | 87
+  98 | FUNFRDRACHT | 88
+  99 | NEUNDEIZEHN | 109
+ 120 | ELFZWOLFUHR | 110
 */
 
 #include <FastLED.h>
@@ -94,6 +94,7 @@ class LedCtrl {
   }
 
   void clear(void) {
+      Serial.println("Led clear");
       clearClockLeds();
   }
 
@@ -302,5 +303,6 @@ class LedCtrl {
       }
       wordCnt++;
     }
+    prevWordIndices[0] = WORDIDX_STOP;
   }
 };
