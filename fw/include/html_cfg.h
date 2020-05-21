@@ -29,6 +29,9 @@ const char htmlCfg[] PROGMEM = R"=====(
       <strong>Für die Konfiguration der Wortuhr benötigt ihr Browser JavaScript!</strong>
     </noscript>
     <div id="wortuhrCfgMain">
+    <p style="font-size:30px">
+        {{ time }}
+    </p>
     <p>
         <label>Host name der Wortuhr</label>
         <input type="text" v-model="hostname">
@@ -89,6 +92,7 @@ const char htmlCfg[] PROGMEM = R"=====(
         var cfgParams = new Vue({
             el: '#wortuhrCfgMain',
             data: {
+                time: '00:00',
                 hostname: '',
                 timeZoneOffset: 0,
                 dayLightSaving: false,
@@ -100,7 +104,8 @@ const char htmlCfg[] PROGMEM = R"=====(
                 nightOnTime: "07:00",
                 dimActive: false,
                 dimBase: 0,
-                dimScale: 0
+                dimScale: 0,
+                timer: ''
             },
             methods: {
                 onColorChange() {
@@ -116,9 +121,20 @@ const char htmlCfg[] PROGMEM = R"=====(
                         .catch(function (error) {
                             console.log(error);
                        });
+                },
+                onTimer() {
+                axios.get('/timedData')
+                    .then((response) => {
+                        timeH = response.data.timeH.toString().padStart(2,'0');
+                        timeM = response.data.timeM.toString().padStart(2,'0');
+                        this.time = timeH+":"+timeM;
+                        this.lightIntensity = response.data.lightIntensity.toString();
+                    });
                 }
             },
             mounted () {
+                this.timer = setInterval(this.onTimer, 200);
+                this.onTimer();
                 axios.get('/config')
                     .then((response) => {
                         noOffH = response.data.nightOffOffHour.toString().padStart(2,'0');

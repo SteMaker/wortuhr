@@ -34,6 +34,11 @@ void notFound(AsyncWebServerRequest *request) {
   request->send(404, "text/plain", "Not found");
 }
 
+void getTime(int &h, int &m) {
+    timeGetter.getTime(h, m);
+    h += persistent.timeZoneOffset() + (persistent.dayLightSaving() ? 1 : 0);
+}
+
 void setupForInitialConfig(void) {
   mode = MODE_INITIAL_CONFIG;
 
@@ -79,6 +84,7 @@ void setupForInitialConfig(void) {
 }
 
 char configBuffer[428]; // 428 comes from ArduinoJson Assistant
+char timedBuffer[75]; // 75 comes from ArduinoJson Assistant
 void setupForNormal(void) {
   mode = MODE_NORMAL;
 
@@ -127,12 +133,21 @@ void setupForNormal(void) {
     doc["dimActive"] = persistent.dim().active;
     doc["dimBase"] = persistent.dim().base;
     doc["dimScale"] = persistent.dim().scale;
-    size_t usedBytes = serializeJson(doc, configBuffer, sizeof(configBuffer));
-    Serial.print(usedBytes);
-    Serial.print(" of ");
-    Serial.print(sizeof(configBuffer));
-    Serial.println(" bytes buffer were used");
+    serializeJson(doc, configBuffer, sizeof(configBuffer));
     request->send(200, "application/json", configBuffer);
+  });
+
+  // time and light intensity getter
+  server.on("/timedData", HTTP_GET, [](AsyncWebServerRequest *request) {
+    const size_t capacity = JSON_OBJECT_SIZE(3);
+    DynamicJsonDocument doc(capacity);
+    int h, m;
+    getTime(h, m);
+    doc["timeH"] = h;
+    doc["timeM"] = m;
+    doc["lightIntensity"] = 0;
+    serializeJson(doc, timedBuffer, sizeof(timedBuffer));
+    request->send(200, "application/json", timedBuffer);
   });
 
   // retrieving the configuration
@@ -209,7 +224,7 @@ void setupForNormal(void) {
       });
   server.addHandler(cfgHandler);
 
-  // color
+  // color setter
   AsyncCallbackJsonWebHandler *colorHandler = new AsyncCallbackJsonWebHandler(
       "/color", [](AsyncWebServerRequest *request, JsonVariant &json) {
         Serial.println("Color received");
@@ -297,13 +312,12 @@ void loop() {
     if (mode == MODE_NORMAL) {
       int h;
       int m;
-      timeGetter.getTime(h, m);
+      getTime(h, m);
 
-      h += persistent.timeZoneOffset() + (persistent.dayLightSaving()?1:0);
       if (withinActiveTimeWindow(h, m)) ledCtrl.setClock(h, m);
       else ledCtrl.clear();
 
-      //delay(300);
+      //delay(250);
     } else {
       static unsigned int timeout = 15*60*2;
       timeout--;

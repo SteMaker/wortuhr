@@ -1,4 +1,4 @@
-#include <CRC.h>
+#include <CRCx.h>
 
 #include <ESP_EEPROM.h>
 
@@ -204,6 +204,6 @@ class Persistent {
     private:
     uint8_t calcCrc() {
       unsigned int size = offsetof(Config, crc);
-      return CRC::crc8((uint8_t *)&config, size);
+      return crcx::crc8((uint8_t *)&config, size);
     }
 };
