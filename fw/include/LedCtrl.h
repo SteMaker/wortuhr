@@ -26,7 +26,7 @@ struct WordPattern {
 
 const WordPattern patterns[] = {
     {.pattern = {8, 7, 6, 5, 255}},                  // EINE
-    {.pattern = {10, 9, 8, 7, 255}},                  // ZWEI
+    {.pattern = {10, 9, 8, 7, 255}},                 // ZWEI
     {.pattern = {4, 3, 2, 1, 255}},                  // DREI
     {.pattern = {11, 12, 13, 14, 255}},              // VIER
     {.pattern = {17, 18, 19, 20, 255}},              // FUENF
@@ -34,11 +34,11 @@ const WordPattern patterns[] = {
     {.pattern = {28, 27, 26, 25, 24, 23, 255}},      // SIEBEN
     {.pattern = {33, 34, 35, 36, 255}},              // ACHT
     {.pattern = {40, 41, 42, 43, 255}},              // NEUN
-    {.pattern = {0, 21, 22, 43, 255}},              // ZEHN
+    {.pattern = {0, 21, 22, 43, 255}},               // ZEHN
     {.pattern = {69, 68, 67, 255}},                  // EIN
     {.pattern = {69, 68, 67, 66, 255}},              // EINS
     {.pattern = {71, 70, 69, 68, 255}},              // ZWEI
-    {.pattern = {55, 56, 57, 58, 255}},              // DREI
+    {.pattern = {93, 92, 104, 105, 255}},            // DREI-SQUARE
     {.pattern = {59, 72, 81, 94, 255}},              // VIER
     {.pattern = {98, 97, 96, 95, 255}},              // FUENF
     {.pattern = {83, 84, 85, 86, 87, 255}},          // SECHS
@@ -54,9 +54,9 @@ const WordPattern patterns[] = {
     {.pattern = {54, 53, 52, 255}},                  // MIN
     {.pattern = {59, 60, 61, 62, 63, 64, 65, 255}},  // VIERTEL
     {.pattern = {55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 255}}, // DREIVIERTEL
-    {.pattern = {76, 75, 74, 73, 255}},    // HALB
-    {.pattern = {6, 15, 37, 38, 39, 40, 255}},  // NO WLAN
-    {.pattern = {37, 38, 39, 40, 255}},  // WLAN
+    {.pattern = {76, 75, 74, 73, 255}},              // HALB
+    {.pattern = {6, 15, 37, 38, 39, 40, 255}},       // NO WLAN
+    {.pattern = {37, 38, 39, 40, 255}},              // WLAN
 };
 
 class LedCtrl {
