@@ -11,3 +11,4 @@ pcb/fp-lib-table
 pcb/sym-lib-table
 pcb/*-cache.lib
 pcb/_autosave*
+pcb/gerber

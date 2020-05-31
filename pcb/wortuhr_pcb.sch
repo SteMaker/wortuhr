@@ -36,17 +36,6 @@ F 3 "http://www.ti.com/lit/ds/symlink/lm1117.pdf" H 2525 3775 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Conn_01x02_Female X1
-U 1 1 5E7F6F31
-P 800 3900
-F 0 "X1" H 793 3559 50  0000 C CNN
-F 1 "250-x02" H 793 3650 50  0000 C CNN
-F 2 "stemaker_connectoren:WAGO_250-402" H 650 3575 50  0001 L BNN
-F 3 "" H 800 3400 50  0001 L BNN
-	1    800  3900
-	-1   0    0    1   
-$EndComp
-$Comp
 L Device:Fuse F1
 U 1 1 5E7F7F60
 P 1375 3775
@@ -67,127 +56,6 @@ F 2 "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm" H 3013 3775 50  0001 C CNN
 F 3 "~" H 2975 3925 50  0001 C CNN
 	1    2975 3925
 	1    0    0    -1  
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H11
-U 1 1 5E7FC38B
-P 950 3350
-F 0 "H11" V 1187 3353 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 3353 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 3350 50  0001 C CNN
-F 3 "~" H 950 3350 50  0001 C CNN
-	1    950  3350
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H10
-U 1 1 5E7FCD66
-P 950 3100
-F 0 "H10" V 1187 3103 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 3103 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 3100 50  0001 C CNN
-F 3 "~" H 950 3100 50  0001 C CNN
-	1    950  3100
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H9
-U 1 1 5E7FD08A
-P 950 2850
-F 0 "H9" V 1187 2853 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 2853 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 2850 50  0001 C CNN
-F 3 "~" H 950 2850 50  0001 C CNN
-	1    950  2850
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H8
-U 1 1 5E7FD2E6
-P 950 2600
-F 0 "H8" V 1187 2603 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 2603 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 2600 50  0001 C CNN
-F 3 "~" H 950 2600 50  0001 C CNN
-	1    950  2600
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H7
-U 1 1 5E7FE6F2
-P 950 2350
-F 0 "H7" V 1187 2353 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 2353 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 2350 50  0001 C CNN
-F 3 "~" H 950 2350 50  0001 C CNN
-	1    950  2350
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H6
-U 1 1 5E7FEA4C
-P 950 2100
-F 0 "H6" V 1187 2103 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 2103 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 2100 50  0001 C CNN
-F 3 "~" H 950 2100 50  0001 C CNN
-	1    950  2100
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H5
-U 1 1 5E8044AF
-P 950 1850
-F 0 "H5" V 1187 1853 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 1853 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 1850 50  0001 C CNN
-F 3 "~" H 950 1850 50  0001 C CNN
-	1    950  1850
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H4
-U 1 1 5E80476C
-P 950 1600
-F 0 "H4" V 1187 1603 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 1603 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 1600 50  0001 C CNN
-F 3 "~" H 950 1600 50  0001 C CNN
-	1    950  1600
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H3
-U 1 1 5E804CD0
-P 950 1350
-F 0 "H3" V 1187 1353 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 1353 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 1350 50  0001 C CNN
-F 3 "~" H 950 1350 50  0001 C CNN
-	1    950  1350
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H2
-U 1 1 5E804FDD
-P 950 1100
-F 0 "H2" V 1187 1103 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 1103 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 1100 50  0001 C CNN
-F 3 "~" H 950 1100 50  0001 C CNN
-	1    950  1100
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H1
-U 1 1 5E805395
-P 950 850
-F 0 "H1" V 1187 853 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 853 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 850 50  0001 C CNN
-F 3 "~" H 950 850 50  0001 C CNN
-	1    950  850 
-	0    -1   -1   0   
 $EndComp
 $Comp
 L Switch:SW_Push SW1
@@ -214,84 +82,16 @@ $EndComp
 $Comp
 L Connector:Conn_01x03_Male J2
 U 1 1 5E81500F
-P 4475 1800
-F 0 "J2" H 4447 1732 50  0000 R CNN
-F 1 "Conn_01x03_Male" H 4447 1823 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 4475 1800 50  0001 C CNN
-F 3 "~" H 4475 1800 50  0001 C CNN
-	1    4475 1800
+P 5225 1775
+F 0 "J2" H 5197 1707 50  0000 R CNN
+F 1 "Conn_01x03_Male" H 5197 1798 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 5225 1775 50  0001 C CNN
+F 3 "~" H 5225 1775 50  0001 C CNN
+	1    5225 1775
 	-1   0    0    1   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H23
-U 1 1 5E81A48A
-P 4075 2200
-F 0 "H23" V 4029 2350 50  0000 L CNN
-F 1 "MountingHole_Pad" V 4120 2350 50  0000 L CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 4075 2200 50  0001 C CNN
-F 3 "~" H 4075 2200 50  0001 C CNN
-	1    4075 2200
-	0    1    1    0   
 $EndComp
 Wire Wire Line
 	1100 3775 1225 3775
-Wire Wire Line
-	1525 3775 1675 3775
-Connection ~ 1675 3775
-Wire Wire Line
-	1675 3775 1675 3350
-Wire Wire Line
-	1675 3350 1050 3350
-Wire Wire Line
-	1050 3100 1675 3100
-Wire Wire Line
-	1675 3100 1675 3350
-Connection ~ 1675 3350
-Wire Wire Line
-	1050 2850 1675 2850
-Wire Wire Line
-	1675 2850 1675 3100
-Connection ~ 1675 3100
-Wire Wire Line
-	1050 2600 1675 2600
-Wire Wire Line
-	1675 2600 1675 2850
-Connection ~ 1675 2850
-Wire Wire Line
-	1050 2350 1675 2350
-Wire Wire Line
-	1675 2350 1675 2600
-Connection ~ 1675 2600
-Wire Wire Line
-	1050 2100 1675 2100
-Wire Wire Line
-	1675 2100 1675 2350
-Connection ~ 1675 2350
-Wire Wire Line
-	1050 1850 1675 1850
-Wire Wire Line
-	1675 1850 1675 2100
-Connection ~ 1675 2100
-Wire Wire Line
-	1050 1600 1675 1600
-Wire Wire Line
-	1675 1600 1675 1850
-Connection ~ 1675 1850
-Wire Wire Line
-	1050 1350 1675 1350
-Wire Wire Line
-	1675 1350 1675 1600
-Connection ~ 1675 1600
-Wire Wire Line
-	1050 1100 1675 1100
-Wire Wire Line
-	1675 1100 1675 1350
-Connection ~ 1675 1350
-Wire Wire Line
-	1050 850  1675 850 
-Wire Wire Line
-	1675 850  1675 1100
-Connection ~ 1675 1100
 Wire Wire Line
 	2450 1600 2350 1600
 $Comp
@@ -408,33 +208,10 @@ Wire Wire Line
 	4250 1600 4175 1600
 Wire Wire Line
 	3775 1600 3650 1600
-Wire Wire Line
-	3650 1700 4275 1700
-Wire Wire Line
-	3650 1900 3750 1900
-Wire Wire Line
-	3750 1900 3750 1800
-Wire Wire Line
-	3750 1800 4275 1800
-$Comp
-L power:GND #PWR0108
-U 1 1 5E838261
-P 4150 1900
-F 0 "#PWR0108" H 4150 1650 50  0001 C CNN
-F 1 "GND" V 4125 1775 50  0000 R CNN
-F 2 "" H 4150 1900 50  0001 C CNN
-F 3 "" H 4150 1900 50  0001 C CNN
-	1    4150 1900
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	4275 1900 4150 1900
-Text Notes 4650 1700 0    50   ~ 0
+Text Notes 5325 1625 0    50   ~ 0
 serial
 Wire Wire Line
 	3650 2200 3975 2200
-Text Notes 4375 2175 0    50   ~ 0
-LED data
 $Comp
 L power:GND #PWR0109
 U 1 1 5E83B3B0
@@ -497,181 +274,8 @@ Wire Wire Line
 	3650 2500 3850 2500
 Wire Wire Line
 	3850 2500 3850 2550
-$Comp
-L Mechanical:MountingHole_Pad H12
-U 1 1 5E84EFF1
-P 950 4475
-F 0 "H12" V 1187 4478 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 4478 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 4475 50  0001 C CNN
-F 3 "~" H 950 4475 50  0001 C CNN
-	1    950  4475
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H13
-U 1 1 5E84F333
-P 950 4725
-F 0 "H13" V 1187 4728 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 4728 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 4725 50  0001 C CNN
-F 3 "~" H 950 4725 50  0001 C CNN
-	1    950  4725
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H14
-U 1 1 5E84F77B
-P 950 4975
-F 0 "H14" V 1187 4978 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 4978 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 4975 50  0001 C CNN
-F 3 "~" H 950 4975 50  0001 C CNN
-	1    950  4975
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H15
-U 1 1 5E84FF9B
-P 950 5225
-F 0 "H15" V 1187 5228 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 5228 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 5225 50  0001 C CNN
-F 3 "~" H 950 5225 50  0001 C CNN
-	1    950  5225
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H16
-U 1 1 5E85028D
-P 950 5475
-F 0 "H16" V 1187 5478 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 5478 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 5475 50  0001 C CNN
-F 3 "~" H 950 5475 50  0001 C CNN
-	1    950  5475
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H17
-U 1 1 5E85051C
-P 950 5725
-F 0 "H17" V 1187 5728 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 5728 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 5725 50  0001 C CNN
-F 3 "~" H 950 5725 50  0001 C CNN
-	1    950  5725
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H18
-U 1 1 5E850708
-P 950 5975
-F 0 "H18" V 1187 5978 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 5978 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 5975 50  0001 C CNN
-F 3 "~" H 950 5975 50  0001 C CNN
-	1    950  5975
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H19
-U 1 1 5E850AAE
-P 950 6225
-F 0 "H19" V 1187 6228 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 6228 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 6225 50  0001 C CNN
-F 3 "~" H 950 6225 50  0001 C CNN
-	1    950  6225
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H20
-U 1 1 5E850CFC
-P 950 6475
-F 0 "H20" V 1187 6478 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 6478 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 6475 50  0001 C CNN
-F 3 "~" H 950 6475 50  0001 C CNN
-	1    950  6475
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H21
-U 1 1 5E850F93
-P 950 6725
-F 0 "H21" V 1187 6728 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 6728 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 6725 50  0001 C CNN
-F 3 "~" H 950 6725 50  0001 C CNN
-	1    950  6725
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Mechanical:MountingHole_Pad H22
-U 1 1 5E85118D
-P 950 6975
-F 0 "H22" V 1187 6978 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1096 6978 50  0000 C CNN
-F 2 "TestPoint:TestPoint_THTPad_2.5x2.5mm_Drill1.2mm" H 950 6975 50  0001 C CNN
-F 3 "~" H 950 6975 50  0001 C CNN
-	1    950  6975
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	1675 4075 1675 4475
-Wire Wire Line
-	1675 4475 1050 4475
-Wire Wire Line
-	1050 4725 1675 4725
-Wire Wire Line
-	1675 4725 1675 4475
-Connection ~ 1675 4475
-Wire Wire Line
-	1050 4975 1675 4975
-Wire Wire Line
-	1675 4975 1675 4725
-Connection ~ 1675 4725
-Wire Wire Line
-	1050 5225 1675 5225
-Wire Wire Line
-	1675 5225 1675 4975
-Connection ~ 1675 4975
-Wire Wire Line
-	1050 5475 1675 5475
-Wire Wire Line
-	1675 5475 1675 5225
-Connection ~ 1675 5225
-Wire Wire Line
-	1050 5725 1675 5725
-Wire Wire Line
-	1675 5725 1675 5475
-Connection ~ 1675 5475
-Wire Wire Line
-	1050 5975 1675 5975
-Wire Wire Line
-	1675 5975 1675 5725
-Connection ~ 1675 5725
-Wire Wire Line
-	1050 6225 1675 6225
-Wire Wire Line
-	1675 6225 1675 5975
-Connection ~ 1675 5975
-Wire Wire Line
-	1050 6475 1675 6475
-Wire Wire Line
-	1675 6475 1675 6225
-Connection ~ 1675 6225
-Wire Wire Line
-	1050 6725 1675 6725
-Wire Wire Line
-	1675 6725 1675 6475
-Connection ~ 1675 6475
-Wire Wire Line
-	1050 6975 1675 6975
-Wire Wire Line
-	1675 6975 1675 6725
-Connection ~ 1675 6725
 Wire Wire Line
 	1100 3775 1100 3800
 Wire Wire Line
@@ -710,12 +314,6 @@ F 3 "" H 4700 2675 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4575 2675 4700 2675
-Text Notes 4575 2600 0    50   ~ 0
-cfg
-Text Notes 3700 1350 0    50   ~ 0
-flash
-Text Notes 2225 1350 0    50   ~ 0
-reset
 Text Notes 4400 3500 0    50   ~ 0
 ambient light
 NoConn ~ 2450 2700
@@ -740,30 +338,13 @@ U 1 1 5E8474F6
 P 1875 3775
 F 0 "NT1" H 1875 3956 50  0000 C CNN
 F 1 "Net-Tie_2" H 1875 3865 50  0000 C CNN
-F 2 "NetTie:NetTie-2_SMD_Pad2.0mm" H 1875 3775 50  0001 C CNN
+F 2 "NetTie:NetTie-2_THT_Pad1.0mm" H 1875 3775 50  0001 C CNN
 F 3 "~" H 1875 3775 50  0001 C CNN
 	1    1875 3775
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:Net-Tie_2 NT2
-U 1 1 5E847A2B
-P 1875 4075
-F 0 "NT2" H 1875 4256 50  0000 C CNN
-F 1 "Net-Tie_2" H 1875 4165 50  0000 C CNN
-F 2 "NetTie:NetTie-2_SMD_Pad2.0mm" H 1875 4075 50  0001 C CNN
-F 3 "~" H 1875 4075 50  0001 C CNN
-	1    1875 4075
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	1675 3775 1775 3775
 Wire Wire Line
 	1975 3775 2100 3775
-Wire Wire Line
-	1975 4075 2100 4075
-Wire Wire Line
-	1675 4075 1775 4075
 $Comp
 L Device:CP C1
 U 1 1 5E857778
@@ -812,4 +393,223 @@ F 3 "" H 2100 3600 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2100 3600 2100 3775
+$Comp
+L Connector:Conn_01x08_Male J5
+U 1 1 5ED55042
+P 775 4775
+F 0 "J5" H 883 5256 50  0000 C CNN
+F 1 "Conn_01x08_Male" H 883 5165 50  0000 C CNN
+F 2 "stemaker_connectoren:WAGO_250-508" H 775 4775 50  0001 C CNN
+F 3 "~" H 775 4775 50  0001 C CNN
+	1    775  4775
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x03_Male J6
+U 1 1 5ED575DC
+P 775 5425
+F 0 "J6" H 883 5706 50  0000 C CNN
+F 1 "Conn_01x03_Male" H 883 5615 50  0000 C CNN
+F 2 "stemaker_connectoren:WAGO_250-503" H 775 5425 50  0001 C CNN
+F 3 "~" H 775 5425 50  0001 C CNN
+	1    775  5425
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x08_Male J4
+U 1 1 5ED59BCD
+P 775 2950
+F 0 "J4" H 883 3431 50  0000 C CNN
+F 1 "Conn_01x08_Male" H 883 3340 50  0000 C CNN
+F 2 "stemaker_connectoren:WAGO_250-508" H 775 2950 50  0001 C CNN
+F 3 "~" H 775 2950 50  0001 C CNN
+	1    775  2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x03_Male J3
+U 1 1 5ED5AD50
+P 775 2425
+F 0 "J3" H 883 2706 50  0000 C CNN
+F 1 "Conn_01x03_Male" H 883 2615 50  0000 C CNN
+F 2 "stemaker_connectoren:WAGO_250-503" H 775 2425 50  0001 C CNN
+F 3 "~" H 775 2425 50  0001 C CNN
+	1    775  2425
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1675 3775 1775 3775
+Wire Wire Line
+	1525 3775 1675 3775
+Connection ~ 1675 3775
+Wire Wire Line
+	1675 3775 1675 3350
+Wire Wire Line
+	1675 3350 1225 3350
+Wire Wire Line
+	975  3250 1225 3250
+Wire Wire Line
+	1225 3250 1225 3350
+Connection ~ 1225 3350
+Wire Wire Line
+	1225 3350 975  3350
+Wire Wire Line
+	975  3150 1225 3150
+Wire Wire Line
+	1225 3150 1225 3250
+Connection ~ 1225 3250
+Wire Wire Line
+	975  3050 1225 3050
+Wire Wire Line
+	1225 3050 1225 3150
+Connection ~ 1225 3150
+Wire Wire Line
+	975  2950 1225 2950
+Wire Wire Line
+	1225 2950 1225 3050
+Connection ~ 1225 3050
+Wire Wire Line
+	975  2850 1225 2850
+Wire Wire Line
+	1225 2850 1225 2950
+Connection ~ 1225 2950
+Wire Wire Line
+	975  2750 1225 2750
+Wire Wire Line
+	1225 2750 1225 2850
+Connection ~ 1225 2850
+Wire Wire Line
+	975  2650 1225 2650
+Wire Wire Line
+	1225 2650 1225 2750
+Connection ~ 1225 2750
+Wire Wire Line
+	975  2525 1225 2525
+Wire Wire Line
+	1225 2525 1225 2650
+Connection ~ 1225 2650
+Wire Wire Line
+	975  2425 1225 2425
+Wire Wire Line
+	1225 2425 1225 2525
+Connection ~ 1225 2525
+Wire Wire Line
+	975  2325 1225 2325
+Wire Wire Line
+	1225 2325 1225 2425
+Connection ~ 1225 2425
+Wire Wire Line
+	1675 4475 1225 4475
+Wire Wire Line
+	975  4575 1225 4575
+Wire Wire Line
+	1225 4575 1225 4475
+Connection ~ 1225 4475
+Wire Wire Line
+	1225 4475 975  4475
+Wire Wire Line
+	975  4675 1225 4675
+Wire Wire Line
+	1225 4675 1225 4575
+Connection ~ 1225 4575
+Wire Wire Line
+	975  4775 1225 4775
+Wire Wire Line
+	1225 4775 1225 4675
+Connection ~ 1225 4675
+Wire Wire Line
+	975  4875 1225 4875
+Wire Wire Line
+	1225 4875 1225 4775
+Connection ~ 1225 4775
+Wire Wire Line
+	975  4975 1225 4975
+Wire Wire Line
+	1225 4975 1225 4875
+Connection ~ 1225 4875
+Wire Wire Line
+	975  5075 1225 5075
+Wire Wire Line
+	1225 5075 1225 4975
+Connection ~ 1225 4975
+Wire Wire Line
+	975  5175 1225 5175
+Wire Wire Line
+	1225 5175 1225 5075
+Connection ~ 1225 5075
+Wire Wire Line
+	975  5325 1225 5325
+Wire Wire Line
+	1225 5325 1225 5175
+Connection ~ 1225 5175
+Wire Wire Line
+	975  5425 1225 5425
+Wire Wire Line
+	1225 5425 1225 5325
+Connection ~ 1225 5325
+Wire Wire Line
+	975  5525 1225 5525
+Wire Wire Line
+	1225 5525 1225 5425
+Connection ~ 1225 5425
+$Comp
+L Connector:Conn_01x03_Male J7
+U 1 1 5EDB2608
+P 800 3900
+F 0 "J7" H 908 4181 50  0000 C CNN
+F 1 "Conn_01x03_Male" H 908 4090 50  0000 C CNN
+F 2 "stemaker_connectoren:WAGO_250-503" H 800 3900 50  0001 C CNN
+F 3 "~" H 800 3900 50  0001 C CNN
+	1    800  3900
+	1    0    0    -1  
+$EndComp
+Text Label 3975 2200 2    50   ~ 0
+LED_DATA
+Wire Wire Line
+	1000 4000 1075 4000
+Wire Wire Line
+	1075 4000 1075 4125
+Wire Wire Line
+	1075 4125 1375 4125
+Text Label 1375 4125 2    50   ~ 0
+LED_DATA
+Text Label 3725 1600 1    50   ~ 0
+FLASH
+Text Label 2425 1600 1    50   ~ 0
+RESET
+Text Label 3850 2400 0    50   ~ 0
+CFG
+Text Label 4275 1700 2    50   ~ 0
+TXD
+Text Label 4275 1900 2    50   ~ 0
+RXD
+Wire Wire Line
+	3650 1700 4275 1700
+Wire Wire Line
+	5025 1675 4625 1675
+Wire Wire Line
+	5025 1775 4625 1775
+Wire Wire Line
+	5025 1875 4625 1875
+Text Label 4625 1675 0    50   ~ 0
+RXD
+Text Label 4625 1775 0    50   ~ 0
+TXD
+$Comp
+L power:GND #PWR0108
+U 1 1 5EE0E294
+P 4625 1975
+F 0 "#PWR0108" H 4625 1725 50  0001 C CNN
+F 1 "GND" H 4630 1802 50  0000 C CNN
+F 2 "" H 4625 1975 50  0001 C CNN
+F 3 "" H 4625 1975 50  0001 C CNN
+	1    4625 1975
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4625 1875 4625 1975
+Wire Wire Line
+	3650 1900 4275 1900
+Wire Wire Line
+	1675 4075 2100 4075
 $EndSCHEMATC
