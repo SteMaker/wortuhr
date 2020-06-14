@@ -49,9 +49,9 @@ class Persistent {
       strlcpy(config.wifiPwd, "", sizeof(config.wifiPwd));
       config.timeZoneOffset = 1; // CET
       config.dayLightSaving = false;
-      config.color.r = 0xff;
-      config.color.g = 0xff;
-      config.color.b = 0xff;
+      config.color.r = 50;    // 0xff is too bright and draws too moch current
+      config.color.g = 50;
+      config.color.b = 50;
       config.nightOff.active = false;
       config.nightOff.offHour = 22;
       config.nightOff.offMinute = 30;
