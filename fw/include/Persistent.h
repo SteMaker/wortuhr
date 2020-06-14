@@ -1,5 +1,4 @@
 #include <CRCx.h>
-
 #include <ESP_EEPROM.h>
 
 class Persistent {

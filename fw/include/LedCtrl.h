@@ -69,11 +69,30 @@ class LedCtrl {
 
   void setup(uint8_t r, uint8_t g, uint8_t b) {
     FastLED.addLeds<NEOPIXEL, LED_DATA_PIN>(leds, NUM_LEDS);
-    ledColor.setRGB(r, g, b);
+    setColor(r, g, b);
   }
 
   void setColor(uint8_t r, uint8_t g, uint8_t b) {
     ledColor.setRGB(r, g, b);
+    luma = ledColor.getLuma();
+    Serial.print("LedCtrl::setColor: luma=");
+    Serial.println(luma);
+    ledColor.maximizeBrightness();
+    Serial.print("LedCtrl::setColor: r,g,b=");
+    Serial.print(ledColor.r);
+    Serial.print(",");
+    Serial.print(ledColor.g);
+    Serial.print(",");
+    Serial.println(ledColor.b);
+  }
+
+  void setLuma(uint8_t _luma) {
+    if(_luma != luma) {
+      Serial.print("LedCtrl::setLuma: luma=");
+      Serial.println(luma);
+      forceUpdate = true;
+    }
+    luma = _luma;
   }
 
   bool forceUpdate = false;
@@ -100,11 +119,13 @@ class LedCtrl {
 
   void showNoWlan(void) {
       Serial.println("showNoWlan");
+      CRGB col = ledColor;
+      col.nscale8_video(luma);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_NOWLAN].pattern;
       int letterCnt = 0;
       while (pattern[letterCnt] != 255) {
-        leds[pattern[letterCnt]] = ledColor;
+        leds[pattern[letterCnt]] = col;
         letterCnt++;
       }
       prevWordIndices[0] = WORDIDX_NOWLAN;
@@ -113,11 +134,13 @@ class LedCtrl {
   }
 
   void showWlan(void) {
+      CRGB col = ledColor;
+      col.nscale8_video(luma);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_WLAN].pattern;
       int letterCnt = 0;
       while (pattern[letterCnt] != 255) {
-        leds[pattern[letterCnt]] = ledColor;
+        leds[pattern[letterCnt]] = col;
         letterCnt++;
       }
       prevWordIndices[0] = WORDIDX_WLAN;
@@ -169,6 +192,7 @@ class LedCtrl {
 
   CRGB leds[NUM_LEDS];
   CRGB ledColor;
+  uint8_t luma;
 
   uint8_t wordIndices[MAX_NUM_WORDS];
   uint8_t prevWordIndices[MAX_NUM_WORDS];
@@ -269,6 +293,8 @@ class LedCtrl {
 
   void setClockLeds(int hour, int minute) {
     int wordCnt = 0;
+    CRGB col = ledColor;
+    col.nscale8_video(luma);
 
     // First we evaluate which words we need to highlight
     getWords(hour, minute);
@@ -283,7 +309,7 @@ class LedCtrl {
       const uint8_t *pattern = patterns[wordIndices[wordCnt]].pattern;
       int letterCnt = 0;
       while (pattern[letterCnt] != 255) {
-        leds[pattern[letterCnt]] = ledColor;
+        leds[pattern[letterCnt]] = col;
         letterCnt++;
       }
       wordCnt++;
