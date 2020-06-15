@@ -224,7 +224,7 @@ class LedCtrl {
       wordIndices[0] = minuteToWord(minute);
       wordIndices[1] = WORDIDX_MIN;
       wordIndices[2] = WORDIDX_NACH;
-      wordIndices[3] = hourToWord(hour, false);
+      wordIndices[3] = hourToWord(hour, true);
       wordIndices[4] = WORDIDX_UHR;
       wordIndices[5] = WORDIDX_STOP;
     } else if (minute < 15) {
