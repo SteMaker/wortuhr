@@ -9,7 +9,7 @@
 #include "LedCtrl.h"
 #include "Ota.h"
 #include "Persistent.h"
-#include "Time.h"
+#include "TimeGetter.h"
 #include "Brightness.h"
 #include "html_cfg.h"
 #include "html_wifi_cfg.h"
