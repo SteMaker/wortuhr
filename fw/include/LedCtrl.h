@@ -113,8 +113,8 @@ class LedCtrl {
   }
 
   void clear(void) {
-      Serial.println("Led clear");
       clearClockLeds();
+      FastLED.show();
   }
 
   void showNoWlan(void) {
