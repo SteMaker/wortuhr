@@ -323,8 +323,15 @@ void loop() {
         ledCtrl.setLuma(luma);
       }
 
-      if (withinActiveTimeWindow(h, m)) ledCtrl.setClock(h, m);
-      else ledCtrl.clear();
+      static bool wasWithinActTimeWindow = false;
+      bool isWithinActTimeWindow = withinActiveTimeWindow(h, m);
+      if (isWithinActTimeWindow) 
+        ledCtrl.setClock(h, m);
+      else if (wasWithinActTimeWindow) {
+        Serial.println("now out of active time window, turning LEDs off");
+        ledCtrl.clear();
+      }
+      wasWithinActTimeWindow = isWithinActTimeWindow;
 
       //delay(250);
     } else {
