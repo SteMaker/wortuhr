@@ -119,7 +119,7 @@ class LedCtrl {
 
   void showNoWlan(void) {
       Serial.println("showNoWlan");
-      CRGB col = ledColor;
+      CRGB col = CRGB::DarkRed;
       col.nscale8_video(luma);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_NOWLAN].pattern;
@@ -134,7 +134,8 @@ class LedCtrl {
   }
 
   void showWlan(void) {
-      CRGB col = ledColor;
+      Serial.println("showWlan");
+      CRGB col = CRGB::Green;
       col.nscale8_video(luma);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_WLAN].pattern;
@@ -194,8 +195,16 @@ class LedCtrl {
   CRGB ledColor;
   uint8_t luma;
 
-  uint8_t wordIndices[MAX_NUM_WORDS];
-  uint8_t prevWordIndices[MAX_NUM_WORDS];
+  uint8_t wordIndices[MAX_NUM_WORDS];       /**< the indices off all words to be shown */
+  uint8_t prevWordIndices[MAX_NUM_WORDS];   /**< shadow of the indices to clear them in the next minute */
+  CRGB    wordColor[MAX_NUM_WORDS];         /**< the color for each word, aligned with wordIndices[] */
+
+  CRGB colorHoursNumeral = CRGB::Green;     /**< numeral for the hour, e.g DREI */
+  CRGB colorMinutesNumeral = CRGB::Yellow;  /**< numeral for the minute, e.g. VIER */
+  CRGB colorMinWord = CRGB::Blue;           /**< the word MIN */
+  CRGB colorPreWord = CRGB::Red;            /**< the words VOR and NACH */
+  CRGB colorquarterWord = CRGB::White;      /**< the words VIRTEL, HALB, DREIVIERTEL */
+  CRGB colorClockWord = CRGB::Red;          /**< the word UHR */
 
   int hourToWord(int hour, bool pre) {
     hour %= 12;
@@ -217,76 +226,76 @@ class LedCtrl {
     hour = hour == 0 ? 12 : hour;
 
     if (minute == 0) {
-      wordIndices[0] = hourToWord(hour, true);
-      wordIndices[1] = WORDIDX_UHR;
+      wordIndices[0] = hourToWord(hour, true);                wordColor[0] = colorHoursNumeral;
+      wordIndices[1] = WORDIDX_UHR;                           wordColor[1] = colorClockWord;
       wordIndices[2] = WORDIDX_STOP;
     } else if (minute <= 10) {
-      wordIndices[0] = minuteToWord(minute);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_NACH;
-      wordIndices[3] = hourToWord(hour, true);
-      wordIndices[4] = WORDIDX_UHR;
+      wordIndices[0] = minuteToWord(minute);                  wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_NACH;                          wordColor[2] = colorPreWord;
+      wordIndices[3] = hourToWord(hour, true);                wordColor[3] = colorHoursNumeral;
+      wordIndices[4] = WORDIDX_UHR;                           wordColor[4] = colorClockWord;
       wordIndices[5] = WORDIDX_STOP;
     } else if (minute < 15) {
-      wordIndices[0] = minuteToWord(15 - minute);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_VOR;
-      wordIndices[3] = WORDIDX_VIERTEL;
-      wordIndices[4] = hourToWord(hour + 1, false);
+      wordIndices[0] = minuteToWord(15 - minute);             wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_VOR;                           wordColor[2] = colorPreWord;
+      wordIndices[3] = WORDIDX_VIERTEL;                       wordColor[3] = colorquarterWord;
+      wordIndices[4] = hourToWord(hour + 1, false);           wordColor[4] = colorHoursNumeral;
       wordIndices[5] = WORDIDX_STOP;
     } else if (minute == 15) {
-      wordIndices[0] = WORDIDX_VIERTEL;
-      wordIndices[1] = hourToWord(hour + 1, false);
+      wordIndices[0] = WORDIDX_VIERTEL;                       wordColor[0] = colorquarterWord;
+      wordIndices[1] = hourToWord(hour + 1, false);           wordColor[1] = colorHoursNumeral;
       wordIndices[2] = WORDIDX_STOP;
     } else if (minute < 20) {
-      wordIndices[0] = minuteToWord(minute - 15);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_NACH;
-      wordIndices[3] = WORDIDX_VIERTEL;
-      wordIndices[4] = hourToWord(hour + 1, false);
+      wordIndices[0] = minuteToWord(minute - 15);             wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_NACH;                          wordColor[2] = colorPreWord;
+      wordIndices[3] = WORDIDX_VIERTEL;                       wordColor[3] = colorquarterWord;
+      wordIndices[4] = hourToWord(hour + 1, false);           wordColor[4] = colorHoursNumeral;
       wordIndices[5] = WORDIDX_STOP;
     } else if (minute < 30) {
-      wordIndices[0] = minuteToWord(30 - minute);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_VOR;
-      wordIndices[3] = WORDIDX_HALB;
-      wordIndices[4] = hourToWord(hour + 1, false);
+      wordIndices[0] = minuteToWord(30 - minute);             wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_VOR;                           wordColor[2] = colorPreWord;
+      wordIndices[3] = WORDIDX_HALB;                          wordColor[3] = colorquarterWord;
+      wordIndices[4] = hourToWord(hour + 1, false);           wordColor[4] = colorHoursNumeral;
       wordIndices[5] = WORDIDX_STOP;
     } else if (minute == 30) {
-      wordIndices[0] = WORDIDX_HALB;
-      wordIndices[1] = hourToWord(hour + 1, false);
+      wordIndices[0] = WORDIDX_HALB;                          wordColor[0] = colorquarterWord;
+      wordIndices[1] = hourToWord(hour + 1, false);           wordColor[1] = colorHoursNumeral;
       wordIndices[2] = WORDIDX_STOP;
     } else if (minute <= 40) {
-      wordIndices[0] = minuteToWord(minute - 30);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_NACH;
-      wordIndices[3] = WORDIDX_HALB;
-      wordIndices[4] = hourToWord(hour + 1, false);
+      wordIndices[0] = minuteToWord(minute - 30);             wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_NACH;                          wordColor[2] = colorPreWord;
+      wordIndices[3] = WORDIDX_HALB;                          wordColor[3] = colorquarterWord;
+      wordIndices[4] = hourToWord(hour + 1, false);           wordColor[4] = colorHoursNumeral;
       wordIndices[5] = WORDIDX_STOP;
     } else if (minute < 45) {
-      wordIndices[0] = minuteToWord(45 - minute);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_VOR;
-      wordIndices[3] = WORDIDX_DREIVIERTEL;
-      wordIndices[4] = hourToWord((hour + 1) % 12, false);
+      wordIndices[0] = minuteToWord(45 - minute);             wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_VOR;                           wordColor[2] = colorPreWord;
+      wordIndices[3] = WORDIDX_DREIVIERTEL;                   wordColor[3] = colorquarterWord;
+      wordIndices[4] = hourToWord((hour + 1) % 12, false);    wordColor[4] = colorHoursNumeral;
       wordIndices[5] = WORDIDX_STOP;
     } else if (minute == 45) {
-      wordIndices[0] = WORDIDX_DREIVIERTEL;
-      wordIndices[1] = hourToWord(hour + 1, false);
+      wordIndices[0] = WORDIDX_DREIVIERTEL;                   wordColor[0] = colorquarterWord;
+      wordIndices[1] = hourToWord(hour + 1, false);           wordColor[1] = colorHoursNumeral;
       wordIndices[2] = WORDIDX_STOP;
     } else if (minute < 50) {
-      wordIndices[0] = minuteToWord(minute - 45);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_NACH;
-      wordIndices[3] = WORDIDX_DREIVIERTEL;
-      wordIndices[4] = hourToWord(hour + 1, false);
+      wordIndices[0] = minuteToWord(minute - 45);             wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_NACH;                          wordColor[2] = colorPreWord;
+      wordIndices[3] = WORDIDX_DREIVIERTEL;                   wordColor[3] = colorquarterWord;
+      wordIndices[4] = hourToWord(hour + 1, false);           wordColor[4] = colorHoursNumeral;
       wordIndices[5] = WORDIDX_STOP;
     } else {
-      wordIndices[0] = minuteToWord(60 - minute);
-      wordIndices[1] = WORDIDX_MIN;
-      wordIndices[2] = WORDIDX_VOR;
-      wordIndices[3] = hourToWord(hour + 1, true);
-      wordIndices[4] = WORDIDX_UHR;
+      wordIndices[0] = minuteToWord(60 - minute);             wordColor[0] = colorMinutesNumeral;
+      wordIndices[1] = WORDIDX_MIN;                           wordColor[1] = colorMinWord;
+      wordIndices[2] = WORDIDX_VOR;                           wordColor[2] = colorPreWord;
+      wordIndices[3] = hourToWord(hour + 1, true);            wordColor[3] = colorHoursNumeral;
+      wordIndices[4] = WORDIDX_UHR;                           wordColor[4] = colorClockWord;
       wordIndices[5] = WORDIDX_STOP;
     }
   }
@@ -309,7 +318,7 @@ class LedCtrl {
       const uint8_t *pattern = patterns[wordIndices[wordCnt]].pattern;
       int letterCnt = 0;
       while (pattern[letterCnt] != 255) {
-        leds[pattern[letterCnt]] = col;
+        leds[pattern[letterCnt]] = wordColor[wordCnt];
         letterCnt++;
       }
       wordCnt++;
