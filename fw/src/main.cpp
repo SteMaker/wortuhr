@@ -62,6 +62,7 @@ void setupForInitialConfig(void) {
     Serial.println("Client connected");
     request->send(200, "text/html", FPSTR(htmlCfgWifi));
   });
+
   server.on("/", HTTP_POST, [](AsyncWebServerRequest *request) {
     Serial.println("Configuration set");
     if (request->hasParam("ssid", true)) {
@@ -85,7 +86,7 @@ void setupForInitialConfig(void) {
   });
 }
 
-char configBuffer[761]; // 761 comes from ArduinoJson Assistant
+char configBuffer[1080]; // 1080 comes from ArduinoJson Assistant
 char timedBuffer[75]; // 75 comes from ArduinoJson Assistant
 void setupForNormal(void) {
   mode = MODE_NORMAL;
@@ -120,8 +121,7 @@ void setupForNormal(void) {
     Serial.print("fragmentation: "); Serial.println(ESP.getHeapFragmentation());
     Serial.print("max block size: "); Serial.println(ESP.getMaxFreeBlockSize());
 
-
-    request->send(200, "text/html", FPSTR(htmlCfg));
+    request->send_P(200, "text/html", htmlCfg);
     Serial.print("size of the request: "); Serial.println(sizeof(htmlCfg));
     Serial.print("free heap: "); Serial.println(ESP.getFreeHeap());
     Serial.print("fragmentation: "); Serial.println(ESP.getHeapFragmentation());
@@ -426,7 +426,6 @@ void setupForNormal(void) {
         request->send(200, "application/json", "{}");
       });
   server.addHandler(colorHandler);
-
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
 }
