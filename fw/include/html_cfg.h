@@ -72,10 +72,10 @@ const char htmlCfg[] PROGMEM = R"=====(
     </h3>
     <p>
         <label><span>LED Rotwert (0..255): {{ colorMinWord.colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorMinWordRed" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorMinWord.colorRed" v-on:input="onColorChange($event)">
         <label><span>LED Grünwert (0..255): {{ colorMinWord.colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorMinWordGreen" v-on:input="onColorChange($event)">
-        <label><span>LED Blauwert (0..255): {{ colorMinWordBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinWord.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorMinWord.colorBlue }}</span></label>
         <input type="range" min="0" max="255" v-model="colorMinWord.colorBlue" v-on:input="onColorChange($event)">
     </p>
     <h3>
@@ -83,10 +83,10 @@ const char htmlCfg[] PROGMEM = R"=====(
     </h3>
     <p>
         <label><span>LED Rotwert (0..255): {{ colorPreWord.colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorPreWordRed" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorPreWord.colorRed" v-on:input="onColorChange($event)">
         <label><span>LED Grünwert (0..255): {{ colorPreWord.colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorPreWordGreen" v-on:input="onColorChange($event)">
-        <label><span>LED Blauwert (0..255): {{ colorPreWordBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorPreWord.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorPreWord.colorBlue }}</span></label>
         <input type="range" min="0" max="255" v-model="colorPreWord.colorBlue" v-on:input="onColorChange($event)">
     </p>
     <h3>
@@ -94,20 +94,20 @@ const char htmlCfg[] PROGMEM = R"=====(
     </h3>
     <p>
         <label><span>LED Rotwert (0..255): {{ colorQuarterWord.colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorQuarterWordRed" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.colorRed" v-on:input="onColorChange($event)">
         <label><span>LED Grünwert (0..255): {{ colorQuarterWord.colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorQuarterWordGreen" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.colorGreen" v-on:input="onColorChange($event)">
         <label><span>LED Blauwert (0..255): {{ colorQuarterWord.colorBlue }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorQuarterWordBlue" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.colorBlue" v-on:input="onColorChange($event)">
     </p>
     <h3>
         Stunde
     </h3>
     <p>
         <label><span>LED Rotwert (0..255): {{ colorHoursNumeral.colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorHoursNumeralRed" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorHoursNumeral.colorRed" v-on:input="onColorChange($event)">
         <label><span>LED Grünwert (0..255): {{ colorHoursNumeral.colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorHoursNumeralGreen" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorHoursNumeral.colorGreen" v-on:input="onColorChange($event)">
         <label><span>LED Blauwert (0..255): {{ colorHoursNumeral.colorBlue }}</span></label>
         <input type="range" min="0" max="255" v-model="colorHoursNumeral.colorBlue" v-on:input="onColorChange($event)">
     </p>
@@ -116,11 +116,11 @@ const char htmlCfg[] PROGMEM = R"=====(
     </h3>
     <p>
         <label><span>LED Rotwert (0..255): {{ colorClockWord.colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorClockWordRed" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorClockWord.colorRed" v-on:input="onColorChange($event)">
         <label><span>LED Grünwert (0..255): {{ colorClockWord.colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorClockWordGreen" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorClockWord.colorGreen" v-on:input="onColorChange($event)">
         <label><span>LED Blauwert (0..255): {{ colorClockWord.colorBlue }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorClockWordBlue" v-on:input="onColorChange($event)">
+        <input type="range" min="0" max="255" v-model="colorClockWord.colorBlue" v-on:input="onColorChange($event)">
     </p>
     <hr />
     <h2>
@@ -204,24 +204,24 @@ const char htmlCfg[] PROGMEM = R"=====(
                 onColorChange() {
                     console.log("changing color");
                     axios.post('/color', {
-                        colorMinutesNumeral.colorRed: cfgParams.colorMinutesNumeral.colorRed,
-                        colorMinutesNumeral.colorGreen: cfgParams.colorMinutesNumeral.colorGreen,
-                        colorMinutesNumeral.colorBlue: cfgParams.colorMinutesNumeral.colorBlue,
-                        colorMinWord.colorRed: cfgParams.colorMinWord.colorRed,
-                        colorMinWord.colorGreen: cfgParams.colorMinWord.colorGreen,
-                        colorMinWord.colorBlue: cfgParams.colorMinWord.colorBlue,
-                        colorPreWord.colorRed: cfgParams.colorPreWord.colorRed,
-                        colorPreWord.colorGreen: cfgParams.colorPreWord.colorGreen,
-                        colorPreWord.colorBlue: cfgParams.colorPreWord.colorBlue,
-                        colorQuarterWord.colorRed: cfgParams.colorQuarterWord.colorRed,
-                        colorQuarterWord.colorGreen: cfgParams.colorQuarterWord.colorGreen,
-                        colorQuarterWord.colorBlue: cfgParams.colorQuarterWord.colorBlue,
-                        colorHoursNumeral.colorRed: cfgParams.colorHoursNumeral.colorRed,
-                        colorHoursNumeral.colorGreen: cfgParams.colorHoursNumeral.colorGreen,
-                        colorHoursNumeral.colorBlue: cfgParams.colorHoursNumeral.colorBlue,
-                        colorClockWord.colorRed: cfgParams.colorClockWord.colorRed,
-                        colorClockWord.colorGreen: cfgParams.colorClockWord.colorGreen,
-                        colorClockWord.colorBlue: cfgParams.colorClockWord.colorBlue
+                        colorMinutesNumeralRed: cfgParams.colorMinutesNumeral.colorRed,
+                        colorMinutesNumeralGreen: cfgParams.colorMinutesNumeral.colorGreen,
+                        colorMinutesNumeralBlue: cfgParams.colorMinutesNumeral.colorBlue,
+                        colorMinWordRed: cfgParams.colorMinWord.colorRed,
+                        colorMinWordGreen: cfgParams.colorMinWord.colorGreen,
+                        colorMinWordBlue: cfgParams.colorMinWord.colorBlue,
+                        colorPreWordRed: cfgParams.colorPreWord.colorRed,
+                        colorPreWordGreen: cfgParams.colorPreWord.colorGreen,
+                        colorPreWordBlue: cfgParams.colorPreWord.colorBlue,
+                        colorQuarterWordRed: cfgParams.colorQuarterWord.colorRed,
+                        colorQuarterWordGreen: cfgParams.colorQuarterWord.colorGreen,
+                        colorQuarterWordBlue: cfgParams.colorQuarterWord.colorBlue,
+                        colorHoursNumeralRed: cfgParams.colorHoursNumeral.colorRed,
+                        colorHoursNumeralGreen: cfgParams.colorHoursNumeral.colorGreen,
+                        colorHoursNumeralBlue: cfgParams.colorHoursNumeral.colorBlue,
+                        colorClockWordRed: cfgParams.colorClockWord.colorRed,
+                        colorClockWordGreen: cfgParams.colorClockWord.colorGreen,
+                        colorClockWordBlue: cfgParams.colorClockWord.colorBlue
                     })
                         .then(function (response) {
                             console.log(response);

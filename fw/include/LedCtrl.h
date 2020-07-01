@@ -61,6 +61,15 @@ const WordPattern patterns[] = {
 
 class LedCtrl {
  public:
+  enum ColorType {
+    minutesNumeral,
+    minWord,
+    preWord,
+    quarterWord,
+    hoursNumeral,
+    clockWord
+  };
+
   LedCtrl() {
     for (int i = 0; i < MAX_NUM_WORDS; i++) prevWordIndices[i] = WORDIDX_STOP;
   }
@@ -72,18 +81,33 @@ class LedCtrl {
 //    setColor(r, g, b);
   }
 
-  void setColor(uint8_t r, uint8_t g, uint8_t b) {
+  void setColor(ColorType t, uint8_t r, uint8_t g, uint8_t b) {
+    switch (t) {
+        case minutesNumeral:
+          colorMinutesNumeral = CRGB(r, g, b);
+        case minWord:
+          colorMinWord = CRGB(r, g, b);
+        case preWord:
+          colorPreWord = CRGB(r, g, b);
+        case quarterWord:
+          colorQuarterWord = CRGB(r, g, b);
+        case hoursNumeral:
+          colorHoursNumeral = CRGB(r, g, b);
+        case clockWord:
+          colorClockWord = CRGB(r, g, b);
+      }
+
 //    ledColor.setRGB(r, g, b);
 //    luma = ledColor.getLuma();
     Serial.print("LedCtrl::setColor: luma=");
     Serial.println(luma);
 //    ledColor.maximizeBrightness();
     Serial.print("LedCtrl::setColor: r,g,b=");
-//    Serial.print(ledColor.r);
+    Serial.print(r);
     Serial.print(",");
-//    Serial.print(ledColor.g);
+    Serial.print(g);
     Serial.print(",");
-//    Serial.println(ledColor.b);
+    Serial.println(b);
   }
 
   void setLuma(uint8_t _luma) {
