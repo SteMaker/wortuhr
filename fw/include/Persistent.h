@@ -232,7 +232,8 @@ class Persistent {
       Serial.print("ssid: ");
       Serial.println(ssid());
       Serial.print("wifiPwd: ");
-      Serial.println(wifiPwd());
+      Serial.println("**********");
+      //Serial.println(wifiPwd());
       Serial.print("timeZoneOffset: ");
       Serial.println(timeZoneOffset());
       Serial.print("dayLightSaving: ");
