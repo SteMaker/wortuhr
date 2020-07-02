@@ -76,9 +76,8 @@ class LedCtrl {
 
   ~LedCtrl() {}
 
-  void setup(/*uint8_t r, uint8_t g, uint8_t b*/) {
+  void setup(void) {
     FastLED.addLeds<NEOPIXEL, LED_DATA_PIN>(leds, NUM_LEDS);
-//    setColor(r, g, b);
   }
 
   void setColor(ColorType t, uint8_t r, uint8_t g, uint8_t b) {
@@ -97,6 +96,7 @@ class LedCtrl {
           colorClockWord = CRGB(r, g, b);
       }
 
+// TODO: handle luma if necessary, or do we rely on the brightness sensor?
 //    ledColor.setRGB(r, g, b);
 //    luma = ledColor.getLuma();
     Serial.print("LedCtrl::setColor: luma=");

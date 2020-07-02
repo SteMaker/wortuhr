@@ -55,7 +55,7 @@ void setupForInitialConfig(void) {
   Serial.print("softAP IP:");
   Serial.println(WiFi.softAPIP());
 
-  ledCtrl.setup(/*persistent.color().r, persistent.color().g, persistent.color().b*/);
+  ledCtrl.setup();
   ledCtrl.showWlan();
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
@@ -94,7 +94,7 @@ void setupForNormal(void) {
   Serial.print("Connecting to SSID: ");
   Serial.println(persistent.ssid());
 
-  ledCtrl.setup(/*persistent.color().r, persistent.color().g, persistent.color().b*/);
+  ledCtrl.setup();
   ledCtrl.showNoWlan();
 
   // Set WiFi to station mode and disconnect from an AP if it was previously
@@ -122,7 +122,7 @@ void setupForNormal(void) {
     Serial.print("  max block size: "); Serial.println(ESP.getMaxFreeBlockSize());
 
     request->send_P(200, "text/html", htmlCfg);
-    Serial.print("  size of the request: "); Serial.println(sizeof(htmlCfg));
+    Serial.print("size of the page that was sent: "); Serial.println(sizeof(htmlCfg));
     Serial.print("  free heap: "); Serial.println(ESP.getFreeHeap());
     Serial.print("  fragmentation: "); Serial.println(ESP.getHeapFragmentation());
     Serial.print("  max block size: "); Serial.println(ESP.getMaxFreeBlockSize());
@@ -135,24 +135,24 @@ void setupForNormal(void) {
     doc["hostname"] = persistent.hostname();
     doc["timeZoneOffset"] = persistent.timeZoneOffset();
     doc["dayLightSaving"] = persistent.dayLightSaving();
-    doc["colorMinutesNumeral.colorRed"] = persistent.color(Persistent::minutesNumeral).r;
-    doc["colorMinutesNumeral.colorGreen"] = persistent.color(Persistent::minutesNumeral).g;
-    doc["colorMinutesNumeral.colorBlue"] = persistent.color(Persistent::minutesNumeral).b;
-    doc["colorMinWord.colorRed"] = persistent.color(Persistent::minWord).r;
-    doc["colorMinWord.colorGreen"] = persistent.color(Persistent::minWord).g;
-    doc["colorMinWord.colorBlue"] = persistent.color(Persistent::minWord).b;
-    doc["colorPreWord.colorRed"] = persistent.color(Persistent::preWord).r;
-    doc["colorPreWord.colorGreen"] = persistent.color(Persistent::preWord).g;
-    doc["colorPreWord.colorBlue"] = persistent.color(Persistent::preWord).b;
-    doc["colorQuarterWord.colorRed"] = persistent.color(Persistent::quarterWord).r;
-    doc["colorQuarterWord.colorGreen"] = persistent.color(Persistent::quarterWord).g;
-    doc["colorQuarterWord.colorBlue"] = persistent.color(Persistent::quarterWord).b;
-    doc["colorHoursNumeral.colorRed"] = persistent.color(Persistent::hoursNumeral).r;
-    doc["colorHoursNumeral.colorGreen"] = persistent.color(Persistent::hoursNumeral).g;
-    doc["colorHoursNumeral.colorBlue"] = persistent.color(Persistent::hoursNumeral).b;
-    doc["colorClockWord.colorRed"] = persistent.color(Persistent::clockWord).r;
-    doc["colorClockWord.colorGreen"] = persistent.color(Persistent::clockWord).g;
-    doc["colorClockWord.colorBlue"] = persistent.color(Persistent::clockWord).b;
+    doc["colorMinutesNumeralRed"] = persistent.color(Persistent::minutesNumeral).r;
+    doc["colorMinutesNumeralGreen"] = persistent.color(Persistent::minutesNumeral).g;
+    doc["colorMinutesNumeralBlue"] = persistent.color(Persistent::minutesNumeral).b;
+    doc["colorMinWordRed"] = persistent.color(Persistent::minWord).r;
+    doc["colorMinWordGreen"] = persistent.color(Persistent::minWord).g;
+    doc["colorMinWordBlue"] = persistent.color(Persistent::minWord).b;
+    doc["colorPreWordRed"] = persistent.color(Persistent::preWord).r;
+    doc["colorPreWordGreen"] = persistent.color(Persistent::preWord).g;
+    doc["colorPreWordBlue"] = persistent.color(Persistent::preWord).b;
+    doc["colorQuarterWordRed"] = persistent.color(Persistent::quarterWord).r;
+    doc["colorQuarterWordGreen"] = persistent.color(Persistent::quarterWord).g;
+    doc["colorQuarterWordBlue"] = persistent.color(Persistent::quarterWord).b;
+    doc["colorHoursNumeralRed"] = persistent.color(Persistent::hoursNumeral).r;
+    doc["colorHoursNumeralGreen"] = persistent.color(Persistent::hoursNumeral).g;
+    doc["colorHoursNumeralBlue"] = persistent.color(Persistent::hoursNumeral).b;
+    doc["colorClockWordRed"] = persistent.color(Persistent::clockWord).r;
+    doc["colorClockWordGreen"] = persistent.color(Persistent::clockWord).g;
+    doc["colorClockWordBlue"] = persistent.color(Persistent::clockWord).b;
     doc["nightOffActive"] = persistent.nightOff().active;
     doc["nightOffOffHour"] = persistent.nightOff().offHour;
     doc["nightOffOffMinute"] = persistent.nightOff().offMinute;
@@ -161,7 +161,7 @@ void setupForNormal(void) {
     doc["dimActive"] = persistent.dim().active;
     doc["dimBase"] = persistent.dim().base;
     doc["dimScale"] = persistent.dim().scale;
-    Serial.print("Size of configuration: "); Serial.println(measureJson(doc));
+    //Serial.print("Size of configuration: "); Serial.println(measureJson(doc));
     serializeJson(doc, configBuffer, sizeof(configBuffer));
     request->send(200, "application/json", configBuffer);
   });
