@@ -57,6 +57,7 @@ const WordPattern patterns[] = {
     {.pattern = {76, 75, 74, 73, 255}},              // HALB
     {.pattern = {6, 15, 37, 38, 39, 40, 255}},       // NO WLAN
     {.pattern = {37, 38, 39, 40, 255}},              // WLAN
+    {.pattern = {103, 255}},                         // D for DOT
 };
 
 class LedCtrl {
@@ -173,6 +174,47 @@ class LedCtrl {
       FastLED.show();
   }
 
+#define IP_OCTET_NUM  4
+  CRGB ipColor[IP_OCTET_NUM] = {CRGB::Red, CRGB::Green, CRGB::Blue, CRGB::Yellow};
+
+  void showIp(IPAddress ip) {
+      Serial.print("showIp: ");
+      Serial.println(ip);
+      for (uint8_t i=0; i<IP_OCTET_NUM; i++) {
+        uint8_t octet = ip[i];
+        //Serial.printf("octet[%d]: %d\n", i, octet);
+        for (int8_t j=0; j<3; j++) {
+          uint8_t digit = (octet / (uint8_t)(pow(10,2-j))) % 10;
+          //Serial.printf("digit %d: %d\n", j, digit);
+          if (digit) {
+            clearClockLeds();
+            prevWordIndices[0] = hourToWord(digit, false);
+            const uint8_t *pattern = patterns[prevWordIndices[0]].pattern;
+            int letterCnt = 0;
+            while (pattern[letterCnt] != 255) {
+              leds[pattern[letterCnt]] = ipColor[i];
+              letterCnt++;
+            }
+          FastLED.show();
+          delay(750);
+          }
+        }
+        if (i<IP_OCTET_NUM-1) {
+          clearClockLeds();
+          prevWordIndices[0] = WORDIDX_DOT;
+          const uint8_t *pattern = patterns[prevWordIndices[0]].pattern;
+          int letterCnt = 0;
+          while (pattern[letterCnt] != 255) {
+            leds[pattern[letterCnt]] = CRGB::White;
+            letterCnt++;
+          }
+          FastLED.show();
+        }
+        delay(1000);
+      }
+      prevWordIndices[1] = WORDIDX_STOP;
+  }
+
  private:
   enum {
     WORDIDX_M_EINE = 0,
@@ -207,6 +249,7 @@ class LedCtrl {
     WORDIDX_HALB = 29,
     WORDIDX_NOWLAN = 30,
     WORDIDX_WLAN = 31,
+    WORDIDX_DOT = 32,
     WORDIDX_BASE_MIN = WORDIDX_M_EINE - 1,
     WORDIDX_BASE_HOUR = WORDIDX_H_EINS - 1,
     WORDIDX_STOP = 255,

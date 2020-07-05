@@ -434,6 +434,7 @@ void setupForNormal(void) {
   server.addHandler(colorHandler);
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
+  ledCtrl.showIp(WiFi.localIP());
 }
 
 void setup() {
