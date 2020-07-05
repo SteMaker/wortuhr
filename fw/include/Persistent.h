@@ -166,41 +166,56 @@ class Persistent {
       switch (t) {
         case minutesNumeral:
           config.colorMinutesNumeral = c;
+          break;
         case minWord:
           config.colorMinWord = c;
+          break;
         case preWord:
           config.colorPreWord = c;
+          break;
         case quarterWord:
           config.colorQuarterWord = c;
+          break;
         case hoursNumeral:
           config.colorHoursNumeral = c;
+          break;
         case clockWord:
           config.colorClockWord = c;
+          break;
       }
       interrupts();
     }
     Color color(ColorType t) {
       noInterrupts();
-      Color t;
+      Color c;
       switch (t) {
         case minutesNumeral:
-          t = config.colorMinutesNumeral;
+          c = config.colorMinutesNumeral;
+          break;
         case minWord:
-          t = config.colorMinWord;
+          c = config.colorMinWord;
+          break;
         case preWord:
-          t = config.colorPreWord;
+          c = config.colorPreWord;
+          break;
         case quarterWord:
-          t = config.colorQuarterWord;
+          c = config.colorQuarterWord;
+          break;
         case hoursNumeral:
-          t = config.colorHoursNumeral;
+          c = config.colorHoursNumeral;
+          break;
         case clockWord:
-          t = config.colorClockWord;
+          c = config.colorClockWord;
+          break;
         default:
           Color dummy;
-          t = dummy;
+          c = dummy;
+          break;
       }
       interrupts();
-      return t;
+      Serial.print("color r: ");
+      Serial.println(c.r);
+      return c;
     }
     void nightOff(NightOff n) {
       noInterrupts();
@@ -267,12 +282,8 @@ class Persistent {
       Serial.print("ssid: ");
       Serial.println(ssid().c_str());
       Serial.print("wifiPwd: ");
-<<<<<<< HEAD
-      Serial.println(wifiPwd().c_str());
-=======
       Serial.println("**********");
       //Serial.println(wifiPwd());
->>>>>>> 878a7d1b06e74b90def2c35b8c2460eb54ee11b6
       Serial.print("timeZoneOffset: ");
       Serial.println(timeZoneOffset());
       Serial.print("dayLightSaving: ");

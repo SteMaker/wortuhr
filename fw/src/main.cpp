@@ -136,6 +136,8 @@ void setupForNormal(void) {
     doc["timeZoneOffset"] = persistent.timeZoneOffset();
     doc["dayLightSaving"] = persistent.dayLightSaving();
     doc["colorMinutesNumeralRed"] = persistent.color(Persistent::minutesNumeral).r;
+    Serial.print("config r: ");
+    Serial.println(persistent.color(Persistent::minutesNumeral).r);
     doc["colorMinutesNumeralGreen"] = persistent.color(Persistent::minutesNumeral).g;
     doc["colorMinutesNumeralBlue"] = persistent.color(Persistent::minutesNumeral).b;
     doc["colorMinWordRed"] = persistent.color(Persistent::minWord).r;
