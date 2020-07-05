@@ -32,11 +32,18 @@ const char htmlCfg[] PROGMEM = R"=====(
     <p style="font-size:30px">
         {{ time }}
     </p>
+    <hr />
+    <h2>
+        Allgemein
+    </h2>
     <p>
-        <label>Host name der Wortuhr</label>
+        <label>Hostname der Wortuhr</label>
         <input type="text" v-model="hostname">
     </p>
     <hr />
+    <h2>
+        Zeit
+    </h2>
     <p>
         <label>Zeitzone / Stundenversatz</label>
         <input type="number" min="-24" max="+24" v-model="timeZoneOffset">
@@ -46,19 +53,79 @@ const char htmlCfg[] PROGMEM = R"=====(
         <input type="checkbox" v-model="dayLightSaving">
     </p>
     <hr />
+    <h2>
+        Farben
+    </h2>
+    <h3>
+        Minuten
+    </h3>
     <p>
-        <label><span>LED Rotwert (0..255): {{ colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Rotwert (0..255): {{ colorMinutesNumeral.colorRed }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinutesNumeral.colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Grünwert (0..255): {{ colorMinutesNumeral.colorGreen }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinutesNumeral.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorMinutesNumeral.colorBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinutesNumeral.colorBlue" v-on:input="onColorChange($event)">
     </p>
+    <h3>
+        Wort MIN
+    </h3>
     <p>
-        <label><span>LED Grünwert (0..255): {{ colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Rotwert (0..255): {{ colorMinWord.colorRed }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinWord.colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Grünwert (0..255): {{ colorMinWord.colorGreen }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinWord.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorMinWord.colorBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinWord.colorBlue" v-on:input="onColorChange($event)">
     </p>
+    <h3>
+        Wort VOR/NACH
+    </h3>
     <p>
-        <label><span>LED Blauwert (0..255): {{ colorBlue }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorBlue" v-on:input="onColorChange($event)">
+        <label><span>LED Rotwert (0..255): {{ colorPreWord.colorRed }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorPreWord.colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Grünwert (0..255): {{ colorPreWord.colorGreen }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorPreWord.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorPreWord.colorBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorPreWord.colorBlue" v-on:input="onColorChange($event)">
+    </p>
+    <h3>
+        Wort VIERTEL/HALB/DREIVIERTEL
+    </h3>
+    <p>
+        <label><span>LED Rotwert (0..255): {{ colorQuarterWord.colorRed }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Grünwert (0..255): {{ colorQuarterWord.colorGreen }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorQuarterWord.colorBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.colorBlue" v-on:input="onColorChange($event)">
+    </p>
+    <h3>
+        Stunde
+    </h3>
+    <p>
+        <label><span>LED Rotwert (0..255): {{ colorHoursNumeral.colorRed }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorHoursNumeral.colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Grünwert (0..255): {{ colorHoursNumeral.colorGreen }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorHoursNumeral.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorHoursNumeral.colorBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorHoursNumeral.colorBlue" v-on:input="onColorChange($event)">
+    </p>
+    <h3>
+        Wort UHR
+    </h3>
+    <p>
+        <label><span>LED Rotwert (0..255): {{ colorClockWord.colorRed }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorClockWord.colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Grünwert (0..255): {{ colorClockWord.colorGreen }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorClockWord.colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Blauwert (0..255): {{ colorClockWord.colorBlue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorClockWord.colorBlue" v-on:input="onColorChange($event)">
     </p>
     <hr />
+    <h2>
+        Helligkeit
+    </h2>
     <p>
         <label>Wortuhr in der Nacht abschalten</label>
         <input type="checkbox" v-model="nightOffActive">
@@ -71,7 +138,6 @@ const char htmlCfg[] PROGMEM = R"=====(
         <label>Einschaltzeit</label>
         <input type="time" v-model="nightOnTime">
     </p>
-    <hr />
     <p>
         <label>Dimmen nach Helligkeit</label>
         <input type="checkbox" v-model="dimActive">
@@ -96,9 +162,36 @@ const char htmlCfg[] PROGMEM = R"=====(
                 hostname: '',
                 timeZoneOffset: 0,
                 dayLightSaving: false,
-                colorRed: 255,
-                colorGreen: 255,
-                colorBlue: 255,
+                colorMinutesNumeral: {
+                    colorRed: 255,
+                    colorGreen: 255,
+                    colorBlue: 0
+                },
+                colorMinWord: {
+                    colorRed: 0,
+                    colorGreen: 0,
+                    colorBlue: 255
+                },
+                colorPreWord: {
+                    colorRed: 255,
+                    colorGreen: 0,
+                    colorBlue: 0
+                },
+                colorQuarterWord: {
+                    colorRed: 255,
+                    colorGreen: 255,
+                    colorBlue: 255
+                },
+                colorHoursNumeral: {
+                    colorRed: 0,
+                    colorGreen: 255,
+                    colorBlue: 0
+                },
+                colorClockWord: {
+                    colorRed: 255,
+                    colorGreen: 255,
+                    colorBlue: 255
+                },
                 nightOffActive: false,
                 nightOffTime: "22:00",
                 nightOnTime: "07:00",
@@ -111,9 +204,24 @@ const char htmlCfg[] PROGMEM = R"=====(
                 onColorChange() {
                     console.log("changing color");
                     axios.post('/color', {
-                        colorRed: cfgParams.colorRed,
-                        colorGreen: cfgParams.colorGreen,
-                        colorBlue: cfgParams.colorBlue
+                        colorMinutesNumeralRed: cfgParams.colorMinutesNumeral.colorRed,
+                        colorMinutesNumeralGreen: cfgParams.colorMinutesNumeral.colorGreen,
+                        colorMinutesNumeralBlue: cfgParams.colorMinutesNumeral.colorBlue,
+                        colorMinWordRed: cfgParams.colorMinWord.colorRed,
+                        colorMinWordGreen: cfgParams.colorMinWord.colorGreen,
+                        colorMinWordBlue: cfgParams.colorMinWord.colorBlue,
+                        colorPreWordRed: cfgParams.colorPreWord.colorRed,
+                        colorPreWordGreen: cfgParams.colorPreWord.colorGreen,
+                        colorPreWordBlue: cfgParams.colorPreWord.colorBlue,
+                        colorQuarterWordRed: cfgParams.colorQuarterWord.colorRed,
+                        colorQuarterWordGreen: cfgParams.colorQuarterWord.colorGreen,
+                        colorQuarterWordBlue: cfgParams.colorQuarterWord.colorBlue,
+                        colorHoursNumeralRed: cfgParams.colorHoursNumeral.colorRed,
+                        colorHoursNumeralGreen: cfgParams.colorHoursNumeral.colorGreen,
+                        colorHoursNumeralBlue: cfgParams.colorHoursNumeral.colorBlue,
+                        colorClockWordRed: cfgParams.colorClockWord.colorRed,
+                        colorClockWordGreen: cfgParams.colorClockWord.colorGreen,
+                        colorClockWordBlue: cfgParams.colorClockWord.colorBlue
                     })
                         .then(function (response) {
                             console.log(response);
@@ -144,9 +252,24 @@ const char htmlCfg[] PROGMEM = R"=====(
                         this.hostname = response.data.hostname;
                         this.timeZoneOffset = response.data.timeZoneOffset;
                         this.dayLightSaving = response.data.dayLightSaving;
-                        this.colorRed = response.data.colorRed;
-                        this.colorGreen = response.data.colorGreen;
-                        this.colorBlue = response.data.colorBlue;
+                        this.colorMinutesNumeral.colorRed =    response.data.colorMinutesNumeralRed;
+                        this.colorMinutesNumeral.colorGreen =  response.data.colorMinutesNumeralGreen;
+                        this.colorMinutesNumeral.colorBlue =   response.data.colorMinutesNumeralBlue;
+                        this.colorMinWord.colorRed =    response.data.colorMinWordRed;
+                        this.colorMinWord.colorGreen =  response.data.colorMinWordGreen;
+                        this.colorMinWord.colorBlue =   response.data.colorMinWordBlue;
+                        this.colorPreWord.colorRed =    response.data.colorPreWordRed;
+                        this.colorPreWord.colorGreen =  response.data.colorPreWordGreen;
+                        this.colorPreWord.colorBlue =   response.data.colorPreWordBlue;
+                        this.colorQuarterWord.colorRed =    response.data.colorQuarterWordRed;
+                        this.colorQuarterWord.colorGreen =  response.data.colorQuarterWordGreen;
+                        this.colorQuarterWord.colorBlue =   response.data.colorQuarterWordBlue;
+                        this.colorHoursNumeral.colorRed =    response.data.colorHoursNumeralRed;
+                        this.colorHoursNumeral.colorGreen =  response.data.colorHoursNumeralGreen;
+                        this.colorHoursNumeral.colorBlue =   response.data.colorHoursNumeralBlue;
+                        this.colorClockWord.colorRed =    response.data.colorClockWordRed;
+                        this.colorClockWord.colorGreen =  response.data.colorClockWordGreen;
+                        this.colorClockWord.colorBlue =   response.data.colorClockWordBlue;
                         this.nightOffActive = response.data.nightOffActive;
                         this.nightOffTime = noOffH + ":" + noOffM;
                         this.nightOnTime = noOnH + ":" + noOnM;
@@ -163,9 +286,24 @@ const char htmlCfg[] PROGMEM = R"=====(
               hostname: cfgParams.hostname,
               timeZoneOffset: cfgParams.timeZoneOffset,
               dayLightSaving: cfgParams.dayLightSaving,
-              colorRed: cfgParams.colorRed,
-              colorGreen: cfgParams.colorGreen,
-              colorBlue: cfgParams.colorBlue,
+              colorMinutesNumeralRed: cfgParams.colorMinutesNumeral.colorRed,
+              colorMinutesNumeralGreen: cfgParams.colorMinutesNumeral.colorGreen,
+              colorMinutesNumeralBlue: cfgParams.colorMinutesNumeral.colorBlue,
+              colorMinWordRed: cfgParams.colorMinWord.colorRed,
+              colorMinWordGreen: cfgParams.colorMinWord.colorGreen,
+              colorMinWordBlue: cfgParams.colorMinWord.colorBlue,
+              colorPreWordRed: cfgParams.colorPreWord.colorRed,
+              colorPreWordGreen: cfgParams.colorPreWord.colorGreen,
+              colorPreWordBlue: cfgParams.colorPreWord.colorBlue,
+              colorQuarterWordRed: cfgParams.colorQuarterWord.colorRed,
+              colorQuarterWordGreen: cfgParams.colorQuarterWord.colorGreen,
+              colorQuarterWordBlue: cfgParams.colorQuarterWord.colorBlue,
+              colorHoursNumeralRed: cfgParams.colorHoursNumeral.colorRed,
+              colorHoursNumeralGreen: cfgParams.colorHoursNumeral.colorGreen,
+              colorHoursNumeralBlue: cfgParams.colorHoursNumeral.colorBlue,
+              colorClockWordRed: cfgParams.colorClockWord.colorRed,
+              colorClockWordGreen: cfgParams.colorClockWord.colorGreen,
+              colorClockWordBlue: cfgParams.colorClockWord.colorBlue,
               nightOffActive: cfgParams.nightOffActive,
               nightOffOffHour: parseInt(nightOffT[0]),
               nightOffOffMinute: parseInt(nightOffT[1]),
