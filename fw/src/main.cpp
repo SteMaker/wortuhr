@@ -67,7 +67,7 @@ void setupForInitialConfig(void) {
     if (request->hasParam("ssid", true)) {
       persistent.ssid(request->getParam("ssid", true)->value().c_str());
       Serial.print("SSID set to: ");
-      Serial.println(persistent.ssid());
+      Serial.println(persistent.ssid().c_str());
       request->send(200, "text/html", FPSTR(htmlCfgWifiConfirm));
     } else {
       request->send(200, "text/html", FPSTR(htmlCfgReject));
@@ -76,7 +76,7 @@ void setupForInitialConfig(void) {
     if (request->hasParam("passwd", true)) {
       persistent.wifiPwd(request->getParam("passwd", true)->value().c_str());
       Serial.print("WiFi password set to: ");
-      Serial.println(persistent.wifiPwd());
+      Serial.println(persistent.wifiPwd().c_str());
     } else {
       Serial.println("No WiFi password");
     }
@@ -91,7 +91,7 @@ void setupForNormal(void) {
   mode = MODE_NORMAL;
 
   Serial.print("Connecting to SSID: ");
-  Serial.println(persistent.ssid());
+  Serial.println(persistent.ssid().c_str());
 
   ledCtrl.setup(persistent.color().r, persistent.color().g, persistent.color().b);
   ledCtrl.showNoWlan();
@@ -99,9 +99,9 @@ void setupForNormal(void) {
   // Set WiFi to station mode and disconnect from an AP if it was previously
   // connected
   WiFi.mode(WIFI_STA);
-  if(strcmp(persistent.hostname(), ""))
-      WiFi.hostname(persistent.hostname());
-  WiFi.begin(persistent.ssid(), persistent.wifiPwd());
+  if(strcmp(persistent.hostname().c_str(), ""))
+      WiFi.hostname(persistent.hostname().c_str());
+  WiFi.begin(persistent.ssid().c_str(), persistent.wifiPwd().c_str());
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -122,7 +122,7 @@ void setupForNormal(void) {
     Serial.println("Configuration requested");
     const size_t capacity = JSON_OBJECT_SIZE(14);
     DynamicJsonDocument doc(capacity);
-    doc["hostname"] = persistent.hostname();
+    doc["hostname"] = persistent.hostname().c_str();
     doc["timeZoneOffset"] = persistent.timeZoneOffset();
     doc["dayLightSaving"] = persistent.dayLightSaving();
     doc["colorRed"] = persistent.color().r;
@@ -265,7 +265,7 @@ void setup() {
     Serial.begin(115200);
     persistent.setup();
 
-    if (!strcmp(persistent.ssid(), "")) {
+    if (!strcmp(persistent.ssid().c_str(), "")) {
       setupForInitialConfig();
     } else {
       setupForNormal();
@@ -306,6 +306,7 @@ bool withinActiveTimeWindow(int hour, int minute) {
 
 void loop() {
     ota.loop();
+    timeGetter.loop();
     if(factoryReset) {
       factoryReset = false;
       ledCtrl.clear();

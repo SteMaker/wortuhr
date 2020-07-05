@@ -81,52 +81,86 @@ class Persistent {
 
   public:
     void hostname(const char *n) {
+      noInterrupts();
       strlcpy(config.hostname, n, sizeof(config.hostname));
+      interrupts();
     }
-    const char* hostname(void) {
-      return config.hostname;
+    std::string hostname(void) {
+      noInterrupts();
+      std::string t(config.hostname);
+      interrupts();
+      return t;
     }
     void ssid(const char *s) {
+      noInterrupts();
       strlcpy(config.ssid, s, sizeof(config.ssid));
+      interrupts();
     }
-    const char* ssid(void) {
-      return config.ssid;
+    std::string ssid(void) {
+      noInterrupts();
+      std::string t(config.ssid);
+      interrupts();
+      return t;
     }
     void wifiPwd(const char *p) {
+      noInterrupts();
       strlcpy(config.wifiPwd, p, sizeof(config.wifiPwd));
+      interrupts();
     }
-    const char* wifiPwd(void) {
-      return config.wifiPwd;
+    std::string wifiPwd(void) {
+      noInterrupts();
+      std::string t(config.wifiPwd);
+      interrupts();
+      return t;
     }
     void timeZoneOffset(int t) {
+      // writing an int is atomic
       config.timeZoneOffset = t;
     }
     int timeZoneOffset(void) {
+      // reading an int is atomic
       return config.timeZoneOffset;
     }
     void dayLightSaving(bool d) {
+      // writing a bool is atomic
       config.dayLightSaving = d;
     }
     bool dayLightSaving(void) {
+      // reading a bool is atomic
       return config.dayLightSaving;
     }
     void color(Color c) {
+      noInterrupts();
       config.color = c;
+      interrupts();
     }
     Color color(void) {
-      return config.color;
+      noInterrupts();
+      Color t = config.color;
+      interrupts();
+      return t;
     }
     void nightOff(NightOff n) {
+      noInterrupts();
       config.nightOff = n;
+      interrupts();
     }
     NightOff nightOff (void) {
-      return config.nightOff;
+      noInterrupts();
+      NightOff t = config.nightOff;
+      interrupts();
+      return t;
     }
     void dim(Dim d) {
+      noInterrupts();
       config.dim = d;
+      interrupts();
     }
     Dim dim(void) {
-      return config.dim;
+      noInterrupts();
+      Dim t = config.dim;
+      interrupts();
+      return t;
     }
 
     void setup(void) {
@@ -167,11 +201,11 @@ class Persistent {
 
     void print(void) {
       Serial.print("hostname: ");
-      Serial.println(hostname());
+      Serial.println(hostname().c_str());
       Serial.print("ssid: ");
-      Serial.println(ssid());
+      Serial.println(ssid().c_str());
       Serial.print("wifiPwd: ");
-      Serial.println(wifiPwd());
+      Serial.println(wifiPwd().c_str());
       Serial.print("timeZoneOffset: ");
       Serial.println(timeZoneOffset());
       Serial.print("dayLightSaving: ");
