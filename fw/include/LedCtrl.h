@@ -84,16 +84,22 @@ class LedCtrl {
     switch (t) {
         case minutesNumeral:
           colorMinutesNumeral = CRGB(r, g, b);
+          break;
         case minWord:
           colorMinWord = CRGB(r, g, b);
+          break;
         case preWord:
           colorPreWord = CRGB(r, g, b);
+          break;
         case quarterWord:
           colorQuarterWord = CRGB(r, g, b);
+          break;
         case hoursNumeral:
           colorHoursNumeral = CRGB(r, g, b);
+          break;
         case clockWord:
           colorClockWord = CRGB(r, g, b);
+          break;
       }
 
 // TODO: handle luma if necessary, or do we rely on the brightness sensor?
