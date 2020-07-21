@@ -150,7 +150,7 @@ class LedCtrl {
   void showNoWlan(void) {
       Serial.println("showNoWlan");
       CRGB col = CRGB::DarkRed;
-//      col.nscale8_video(luma);
+      col.nscale8_video(luma);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_NOWLAN].pattern;
       int letterCnt = 0;
@@ -166,7 +166,7 @@ class LedCtrl {
   void showWlan(void) {
       Serial.println("showWlan");
       CRGB col = CRGB::Green;
-//      col.nscale8_video(luma);
+      col.nscale8_video(luma);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_WLAN].pattern;
       int letterCnt = 0;
@@ -222,7 +222,7 @@ class LedCtrl {
   int currentMinute = 61;
 
   CRGB leds[NUM_LEDS];
-  uint8_t luma;
+  uint8_t luma = 128;   // half brightness
 
   uint8_t wordIndices[MAX_NUM_WORDS];       /**< the indices off all words to be shown */
   uint8_t prevWordIndices[MAX_NUM_WORDS];   /**< shadow of the indices to clear them in the next minute */
@@ -344,7 +344,7 @@ class LedCtrl {
       Serial.print(" ");
       // scale the brightness
       col = wordColor[wordCnt];
-//      col.nscale8_video(luma);
+      col.nscale8_video(luma);
       // for each word we take the letters to be enabled and set the leds
       const uint8_t *pattern = patterns[wordIndices[wordCnt]].pattern;
       int letterCnt = 0;
