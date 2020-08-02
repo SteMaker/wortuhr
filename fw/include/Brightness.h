@@ -26,10 +26,9 @@ class Brightness {
         scale = _scale;
     }
 
-    uint8_t getLuma() {
+    uint8_t getLumaScale() {
         uint32_t intensity = lightSensor.GetLightIntensity();
-        uint32_t luma32 = intensity * uint32_t(scale);
-        luma32 >>= 10;
+        uint32_t luma32 = intensity * uint32_t(scale) / 32;
         luma32 = (luma32 < base) ? base : luma32;
         return (luma32 > 255) ? 255 : luma32;
     }

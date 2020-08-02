@@ -86,6 +86,146 @@ void setupForInitialConfig(void) {
   });
 }
 
+void setColorFromJson(JsonObject &jsonObj, bool persist) {
+  // Luma
+  uint8_t luma = persistent.luma();
+  if (jsonObj.containsKey("luma")) {
+    luma = jsonObj["luma"];
+    if (persist) persistent.luma(luma);
+  } else {
+    Serial.println("No Luma value found");
+  }
+
+  // colorMinutesNumeral
+  Persistent::Color c;
+  c = persistent.color(Persistent::minutesNumeral);
+  if (jsonObj.containsKey("colorMinutesNumeralHue")) {
+    c.hue = jsonObj["colorMinutesNumeralHue"];
+  }
+  if (jsonObj.containsKey("colorMinutesNumeralSat")) {
+    c.sat = jsonObj["colorMinutesNumeralSat"];
+  }
+  if (jsonObj.containsKey("colorMinutesNumeralLumaOffset")) {
+    c.lumaOffset = jsonObj["colorMinutesNumeralLumaOffset"];
+  }
+  if (persist) persistent.color(Persistent::minutesNumeral, c);
+  Serial.print("New colorMinutesNumeral: ");
+  Serial.print("hue: ");
+  Serial.print(c.hue);
+  Serial.print(", sat: ");
+  Serial.print(c.sat);
+  Serial.print(", lumaOffset: ");
+  Serial.println(c.lumaOffset);
+  ledCtrl.setColor(LedCtrl::minutesNumeral, c.hue, c.sat, c.lumaOffset, luma);
+
+  // colorMinWord
+  c = persistent.color(Persistent::minWord);
+  if (jsonObj.containsKey("colorMinWordHue")) {
+    c.hue = jsonObj["colorMinWordHue"];
+  }
+  if (jsonObj.containsKey("colorMinWordSat")) {
+    c.sat = jsonObj["colorMinWordSat"];
+  }
+  if (jsonObj.containsKey("colorMinWordLumaOffset")) {
+    c.lumaOffset = jsonObj["colorMinWordLumaOffset"];
+  }
+  if (persist) persistent.color(Persistent::minWord, c);
+  Serial.print("New colorMinWord: ");
+  Serial.print("hue: ");
+  Serial.print(c.hue);
+  Serial.print(", sat: ");
+  Serial.print(c.sat);
+  Serial.print(", lumaOffset: ");
+  Serial.println(c.lumaOffset);
+  ledCtrl.setColor(LedCtrl::minWord, c.hue, c.sat, c.lumaOffset, luma);
+
+  // colorPreWord
+  c = persistent.color(Persistent::preWord);
+  if (jsonObj.containsKey("colorPreWordHue")) {
+    c.hue = jsonObj["colorPreWordHue"];
+  }
+  if (jsonObj.containsKey("colorPreWordSat")) {
+    c.sat = jsonObj["colorPreWordSat"];
+  }
+  if (jsonObj.containsKey("colorPreWordLumaOffset")) {
+    c.lumaOffset = jsonObj["colorPreWordLumaOffset"];
+  }
+  if (persist) persistent.color(Persistent::preWord, c);
+  Serial.print("New colorPreWord: ");
+  Serial.print("hue: ");
+  Serial.print(c.hue);
+  Serial.print(", sat: ");
+  Serial.print(c.sat);
+  Serial.print(", lumaOffset: ");
+  Serial.println(c.lumaOffset);
+  ledCtrl.setColor(LedCtrl::preWord, c.hue, c.sat, c.lumaOffset, luma);
+
+  // quarterWord
+  c = persistent.color(Persistent::quarterWord);
+  if (jsonObj.containsKey("colorQuarterWordHue")) {
+    c.hue = jsonObj["colorQuarterWordHue"];
+  }
+  if (jsonObj.containsKey("colorQuarterWordSat")) {
+    c.sat = jsonObj["colorQuarterWordSat"];
+  }
+  if (jsonObj.containsKey("colorQuarterWordLumaOffset")) {
+    c.lumaOffset = jsonObj["colorQuarterWordLumaOffset"];
+  }
+  if (persist) persistent.color(Persistent::quarterWord, c);
+  Serial.print("New colorQuarterWord: ");
+  Serial.print("hue: ");
+  Serial.print(c.hue);
+  Serial.print(", sat: ");
+  Serial.print(c.sat);
+  Serial.print(", lumaOffset: ");
+  Serial.println(c.lumaOffset);
+  ledCtrl.setColor(LedCtrl::quarterWord, c.hue, c.sat, c.lumaOffset, luma);
+
+  // hoursNumeral
+  c = persistent.color(Persistent::hoursNumeral);
+  if (jsonObj.containsKey("colorHoursNumeralHue")) {
+    c.hue = jsonObj["colorHoursNumeralHue"];
+  }
+  if (jsonObj.containsKey("colorHoursNumeralSat")) {
+    c.sat = jsonObj["colorHoursNumeralSat"];
+  }
+  if (jsonObj.containsKey("colorHoursNumeralLumaOffset")) {
+    c.lumaOffset = jsonObj["colorHoursNumeralLumaOffset"];
+  }
+  if (persist) persistent.color(Persistent::hoursNumeral, c);
+  Serial.print("New colorHoursNumeral: ");
+  Serial.print("hue: ");
+  Serial.print(c.hue);
+  Serial.print(", sat: ");
+  Serial.print(c.sat);
+  Serial.print(", lumaOffset: ");
+  Serial.println(c.lumaOffset);
+  ledCtrl.setColor(LedCtrl::hoursNumeral, c.hue, c.sat, c.lumaOffset, luma);
+
+  // clockWord
+  c = persistent.color(Persistent::clockWord);
+  if (jsonObj.containsKey("colorClockWordHue")) {
+    c.hue = jsonObj["colorClockWordHue"];
+  }
+  if (jsonObj.containsKey("colorClockWordSat")) {
+    c.sat = jsonObj["colorClockWordSat"];
+  }
+  if (jsonObj.containsKey("colorClockWordLumaOffset")) {
+    c.lumaOffset = jsonObj["colorClockWordLumaOffset"];
+  }
+  if (persist) persistent.color(Persistent::clockWord, c);
+  Serial.print("New colorClockWord: ");
+  Serial.print("hue: ");
+  Serial.print(c.hue);
+  Serial.print(", sat: ");
+  Serial.print(c.sat);
+  Serial.print(", lumaOffset: ");
+  Serial.println(c.lumaOffset);
+  ledCtrl.setColor(LedCtrl::clockWord, c.hue, c.sat, c.lumaOffset, luma);
+
+  ledCtrl.forceUpdate = true;
+}
+
 char configBuffer[1080]; // 1080 comes from ArduinoJson Assistant
 char timedBuffer[75]; // 75 comes from ArduinoJson Assistant
 void setupForNormal(void) {
@@ -100,15 +240,15 @@ void setupForNormal(void) {
   // Set WiFi to station mode and disconnect from an AP if it was previously
   // connected
   WiFi.mode(WIFI_STA);
-  if(strcmp(persistent.hostname().c_str(), ""))
-      WiFi.hostname(persistent.hostname().c_str());
+  if (strcmp(persistent.hostname().c_str(), ""))
+    WiFi.hostname(persistent.hostname().c_str());
   WiFi.begin(persistent.ssid().c_str(), persistent.wifiPwd().c_str());
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
   ledCtrl.showWlan();
-  delay(1000);       // indicate the connection before switching to the time
+  delay(1000);  // indicate the connection before switching to the time
 
   ota.setup();
   timeGetter.setup();
@@ -117,44 +257,61 @@ void setupForNormal(void) {
   // Serving the standard configuration page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     Serial.println("Client connected");
-    Serial.print("  free heap: "); Serial.println(ESP.getFreeHeap());
-    Serial.print("  fragmentation: "); Serial.println(ESP.getHeapFragmentation());
-    Serial.print("  max block size: "); Serial.println(ESP.getMaxFreeBlockSize());
+    Serial.print("  free heap: ");
+    Serial.println(ESP.getFreeHeap());
+    Serial.print("  fragmentation: ");
+    Serial.println(ESP.getHeapFragmentation());
+    Serial.print("  max block size: ");
+    Serial.println(ESP.getMaxFreeBlockSize());
 
     request->send_P(200, "text/html", htmlCfg);
-    Serial.print("size of the page that was sent: "); Serial.println(sizeof(htmlCfg));
-    Serial.print("  free heap: "); Serial.println(ESP.getFreeHeap());
-    Serial.print("  fragmentation: "); Serial.println(ESP.getHeapFragmentation());
-    Serial.print("  max block size: "); Serial.println(ESP.getMaxFreeBlockSize());
+    Serial.print("size of the page that was sent: ");
+    Serial.println(sizeof(htmlCfg));
+    Serial.print("  free heap: ");
+    Serial.println(ESP.getFreeHeap());
+    Serial.print("  fragmentation: ");
+    Serial.println(ESP.getHeapFragmentation());
+    Serial.print("  max block size: ");
+    Serial.println(ESP.getMaxFreeBlockSize());
   });
 
   server.on("/config", HTTP_GET, [](AsyncWebServerRequest *request) {
     Serial.println("Configuration requested");
-    const size_t capacity = JSON_OBJECT_SIZE(29);   // adjust to the number of elements
+    const size_t capacity =
+        JSON_OBJECT_SIZE(30);  // adjust to the number of elements
     DynamicJsonDocument doc(capacity);
     doc["hostname"] = persistent.hostname().c_str();
     doc["timeZoneOffset"] = persistent.timeZoneOffset();
     doc["dayLightSaving"] = persistent.dayLightSaving();
-    doc["colorMinutesNumeralRed"] = persistent.color(Persistent::minutesNumeral).r;
-    Serial.print("config r: ");
-    Serial.println(persistent.color(Persistent::minutesNumeral).r);
-    doc["colorMinutesNumeralGreen"] = persistent.color(Persistent::minutesNumeral).g;
-    doc["colorMinutesNumeralBlue"] = persistent.color(Persistent::minutesNumeral).b;
-    doc["colorMinWordRed"] = persistent.color(Persistent::minWord).r;
-    doc["colorMinWordGreen"] = persistent.color(Persistent::minWord).g;
-    doc["colorMinWordBlue"] = persistent.color(Persistent::minWord).b;
-    doc["colorPreWordRed"] = persistent.color(Persistent::preWord).r;
-    doc["colorPreWordGreen"] = persistent.color(Persistent::preWord).g;
-    doc["colorPreWordBlue"] = persistent.color(Persistent::preWord).b;
-    doc["colorQuarterWordRed"] = persistent.color(Persistent::quarterWord).r;
-    doc["colorQuarterWordGreen"] = persistent.color(Persistent::quarterWord).g;
-    doc["colorQuarterWordBlue"] = persistent.color(Persistent::quarterWord).b;
-    doc["colorHoursNumeralRed"] = persistent.color(Persistent::hoursNumeral).r;
-    doc["colorHoursNumeralGreen"] = persistent.color(Persistent::hoursNumeral).g;
-    doc["colorHoursNumeralBlue"] = persistent.color(Persistent::hoursNumeral).b;
-    doc["colorClockWordRed"] = persistent.color(Persistent::clockWord).r;
-    doc["colorClockWordGreen"] = persistent.color(Persistent::clockWord).g;
-    doc["colorClockWordBlue"] = persistent.color(Persistent::clockWord).b;
+    doc["luma"] = persistent.luma();
+    doc["colorMinutesNumeralHue"] =
+        persistent.color(Persistent::minutesNumeral).hue;
+    doc["colorMinutesNumeralSat"] =
+        persistent.color(Persistent::minutesNumeral).sat;
+    doc["colorMinutesNumeralLumaOffset"] =
+        persistent.color(Persistent::minutesNumeral).lumaOffset;
+    doc["colorMinWordHue"] = persistent.color(Persistent::minWord).hue;
+    doc["colorMinWordSat"] = persistent.color(Persistent::minWord).sat;
+    doc["colorMinWordLumaOffset"] =
+        persistent.color(Persistent::minWord).lumaOffset;
+    doc["colorPreWordHue"] = persistent.color(Persistent::preWord).hue;
+    doc["colorPreWordSat"] = persistent.color(Persistent::preWord).sat;
+    doc["colorPreWordLumaOffset"] =
+        persistent.color(Persistent::preWord).lumaOffset;
+    doc["colorQuarterWordHue"] = persistent.color(Persistent::quarterWord).hue;
+    doc["colorQuarterWordSat"] = persistent.color(Persistent::quarterWord).sat;
+    doc["colorQuarterWordLumaOffset"] =
+        persistent.color(Persistent::quarterWord).lumaOffset;
+    doc["colorHoursNumeralHue"] =
+        persistent.color(Persistent::hoursNumeral).hue;
+    doc["colorHoursNumeralSat"] =
+        persistent.color(Persistent::hoursNumeral).sat;
+    doc["colorHoursNumeralLumaOffset"] =
+        persistent.color(Persistent::hoursNumeral).lumaOffset;
+    doc["colorClockWordHue"] = persistent.color(Persistent::clockWord).hue;
+    doc["colorClockWordSat"] = persistent.color(Persistent::clockWord).sat;
+    doc["colorClockWordLumaOffset"] =
+        persistent.color(Persistent::clockWord).lumaOffset;
     doc["nightOffActive"] = persistent.nightOff().active;
     doc["nightOffOffHour"] = persistent.nightOff().offHour;
     doc["nightOffOffMinute"] = persistent.nightOff().offMinute;
@@ -163,7 +320,8 @@ void setupForNormal(void) {
     doc["dimActive"] = persistent.dim().active;
     doc["dimBase"] = persistent.dim().base;
     doc["dimScale"] = persistent.dim().scale;
-    //Serial.print("Size of configuration: "); Serial.println(measureJson(doc));
+    // Serial.print("Size of configuration: ");
+    // Serial.println(measureJson(doc));
     serializeJson(doc, configBuffer, sizeof(configBuffer));
     request->send(200, "application/json", configBuffer);
   });
@@ -180,6 +338,7 @@ void setupForNormal(void) {
     serializeJson(doc, timedBuffer, sizeof(timedBuffer));
     request->send(200, "application/json", timedBuffer);
   });
+
 
   // retrieving the configuration
   AsyncCallbackJsonWebHandler *cfgHandler = new AsyncCallbackJsonWebHandler(
@@ -205,78 +364,7 @@ void setupForNormal(void) {
           Serial.println("No day light saving found");
         }
 
-        Persistent::Color c;
-        if (jsonObj.containsKey("colorMinutesNumeralRed")) {
-          c.r = jsonObj["colorMinutesNumeralRed"];
-        }
-        if (jsonObj.containsKey("colorMinutesNumeralGreen")) {
-          c.g = jsonObj["colorMinutesNumeralGreen"];
-        }
-        if (jsonObj.containsKey("colorMinutesNumeralBlue")) {
-          c.b = jsonObj["colorMinutesNumeralBlue"];
-        }
-        persistent.color(Persistent::minutesNumeral, c);
-        ledCtrl.setColor(LedCtrl::minutesNumeral, c.r, c.g, c.b);
-
-        if (jsonObj.containsKey("colorMinWordRed")) {
-          c.r = jsonObj["colorMinWordRed"];
-        }
-        if (jsonObj.containsKey("colorMinWordGreen")) {
-          c.g = jsonObj["colorMinWordGreen"];
-        }
-        if (jsonObj.containsKey("colorMinWordBlue")) {
-          c.b = jsonObj["colorMinWordBlue"];
-        }
-        persistent.color(Persistent::minWord, c);
-        ledCtrl.setColor(LedCtrl::minWord, c.r, c.g, c.b);
-
-        if (jsonObj.containsKey("colorPreWordRed")) {
-          c.r = jsonObj["colorPreWordRed"];
-        }
-        if (jsonObj.containsKey("colorPreWordGreen")) {
-          c.g = jsonObj["colorPreWordGreen"];
-        }
-        if (jsonObj.containsKey("colorPreWordBlue")) {
-          c.b = jsonObj["colorPreWordBlue"];
-        }
-        persistent.color(Persistent::preWord, c);
-        ledCtrl.setColor(LedCtrl::preWord, c.r, c.g, c.b);
-
-        if (jsonObj.containsKey("colorQuarterWordRed")) {
-          c.r = jsonObj["colorQuarterWordRed"];
-        }
-        if (jsonObj.containsKey("colorQuarterWordGreen")) {
-          c.g = jsonObj["colorQuarterWordGreen"];
-        }
-        if (jsonObj.containsKey("colorQuarterWordBlue")) {
-          c.b = jsonObj["colorQuarterWordBlue"];
-        }
-        persistent.color(Persistent::quarterWord, c);
-        ledCtrl.setColor(LedCtrl::quarterWord, c.r, c.g, c.b);
-
-        if (jsonObj.containsKey("colorHoursNumeralRed")) {
-          c.r = jsonObj["colorHoursNumeralRed"];
-        }
-        if (jsonObj.containsKey("colorHoursNumeralGreen")) {
-          c.g = jsonObj["colorHoursNumeralGreen"];
-        }
-        if (jsonObj.containsKey("colorHoursNumeralBlue")) {
-          c.b = jsonObj["colorHoursNumeralBlue"];
-        }
-        persistent.color(Persistent::hoursNumeral, c);
-        ledCtrl.setColor(LedCtrl::hoursNumeral, c.r, c.g, c.b);
-
-        if (jsonObj.containsKey("colorClockWordRed")) {
-          c.r = jsonObj["colorClockWordRed"];
-        }
-        if (jsonObj.containsKey("colorClockWordGreen")) {
-          c.g = jsonObj["colorClockWordGreen"];
-        }
-        if (jsonObj.containsKey("colorClockWordBlue")) {
-          c.b = jsonObj["colorClockWordBlue"];
-        }
-        persistent.color(Persistent::clockWord, c);
-        ledCtrl.setColor(LedCtrl::clockWord, c.r, c.g, c.b);
+        setColorFromJson(jsonObj, true);
 
         Persistent::NightOff no;
         if (jsonObj.containsKey("nightOffActive")) {
@@ -311,7 +399,6 @@ void setupForNormal(void) {
         persistent.print();
 
         persistent.updateToFlash();
-        ledCtrl.forceUpdate = true;
         request->send(200, "application/json", "{}");
       });
   server.addHandler(cfgHandler);
@@ -320,117 +407,8 @@ void setupForNormal(void) {
   AsyncCallbackJsonWebHandler *colorHandler = new AsyncCallbackJsonWebHandler(
       "/color", [](AsyncWebServerRequest *request, JsonVariant &json) {
         Serial.println("Color received");
-        uint8_t r, g, b;
         JsonObject jsonObj = json.as<JsonObject>();
-        r = persistent.color(Persistent::minutesNumeral).r;
-        g = persistent.color(Persistent::minutesNumeral).g;
-        b = persistent.color(Persistent::minutesNumeral).b;
-        if (jsonObj.containsKey("colorMinutesNumeralRed")) {
-          r = jsonObj["colorMinutesNumeralRed"];
-        }
-        if (jsonObj.containsKey("colorMinutesNumeralGreen")) {
-          g = jsonObj["colorMinutesNumeralGreen"];
-        }
-        if (jsonObj.containsKey("colorMinutesNumeralBlue")) {
-          b = jsonObj["colorMinutesNumeralBlue"];
-        }
-        Serial.print("New colorMinutesNumeral: ");
-        Serial.print("red: "); Serial.print(r);
-        Serial.print(", green: ");  Serial.print(g);
-        Serial.print(", blue: ");  Serial.println(b);
-        ledCtrl.setColor(LedCtrl::minutesNumeral, r, g, b);
-
-        r = persistent.color(Persistent::minWord).r;
-        g = persistent.color(Persistent::minWord).g;
-        b = persistent.color(Persistent::minWord).b;
-        if (jsonObj.containsKey("colorMinWordRed")) {
-          r = jsonObj["colorMinWordRed"];
-        }
-        if (jsonObj.containsKey("colorMinWordGreen")) {
-          g = jsonObj["colorMinWordGreen"];
-        }
-        if (jsonObj.containsKey("colorMinWordBlue")) {
-          b = jsonObj["colorMinWordBlue"];
-        }
-        Serial.print("New colorMinWord: ");
-        Serial.print("red: "); Serial.print(r);
-        Serial.print(", green: ");  Serial.print(g);
-        Serial.print(", blue: ");  Serial.println(b);
-        ledCtrl.setColor(LedCtrl::minWord, r, g, b);
-
-        r = persistent.color(Persistent::preWord).r;
-        g = persistent.color(Persistent::preWord).g;
-        b = persistent.color(Persistent::preWord).b;
-        if (jsonObj.containsKey("colorPreWordRed")) {
-          r = jsonObj["colorPreWordRed"];
-        }
-        if (jsonObj.containsKey("colorPreWordGreen")) {
-          g = jsonObj["colorPreWordGreen"];
-        }
-        if (jsonObj.containsKey("colorPreWordBlue")) {
-          b = jsonObj["colorPreWordBlue"];
-        }
-        Serial.print("New colorPreWord: ");
-        Serial.print("red: "); Serial.print(r);
-        Serial.print(", green: ");  Serial.print(g);
-        Serial.print(", blue: ");  Serial.println(b);
-        ledCtrl.setColor(LedCtrl::preWord, r, g, b);
-
-        r = persistent.color(Persistent::quarterWord).r;
-        g = persistent.color(Persistent::quarterWord).g;
-        b = persistent.color(Persistent::quarterWord).b;
-        if (jsonObj.containsKey("colorQuarterWordRed")) {
-          r = jsonObj["colorQuarterWordRed"];
-        }
-        if (jsonObj.containsKey("colorQuarterWordGreen")) {
-          g = jsonObj["colorQuarterWordGreen"];
-        }
-        if (jsonObj.containsKey("colorQuarterWordBlue")) {
-          b = jsonObj["colorQuarterWordBlue"];
-        }
-        Serial.print("New colorQuarterWord: ");
-        Serial.print("red: "); Serial.print(r);
-        Serial.print(", green: ");  Serial.print(g);
-        Serial.print(", blue: ");  Serial.println(b);
-        ledCtrl.setColor(LedCtrl::quarterWord, r, g, b);
-
-        r = persistent.color(Persistent::hoursNumeral).r;
-        g = persistent.color(Persistent::hoursNumeral).g;
-        b = persistent.color(Persistent::hoursNumeral).b;
-        if (jsonObj.containsKey("colorHoursNumeralRed")) {
-          r = jsonObj["colorHoursNumeralRed"];
-        }
-        if (jsonObj.containsKey("colorHoursNumeralGreen")) {
-          g = jsonObj["colorHoursNumeralGreen"];
-        }
-        if (jsonObj.containsKey("colorHoursNumeralBlue")) {
-          b = jsonObj["colorHoursNumeralBlue"];
-        }
-        Serial.print("New colorHoursNumeral: ");
-        Serial.print("red: "); Serial.print(r);
-        Serial.print(", green: ");  Serial.print(g);
-        Serial.print(", blue: ");  Serial.println(b);
-        ledCtrl.setColor(LedCtrl::hoursNumeral, r, g, b);
-
-        r = persistent.color(Persistent::clockWord).r;
-        g = persistent.color(Persistent::clockWord).g;
-        b = persistent.color(Persistent::clockWord).b;
-        if (jsonObj.containsKey("colorClockWordRed")) {
-          r = jsonObj["colorClockWordRed"];
-        }
-        if (jsonObj.containsKey("colorClockWordGreen")) {
-          g = jsonObj["colorClockWordGreen"];
-        }
-        if (jsonObj.containsKey("colorClockWordBlue")) {
-          b = jsonObj["colorClockWordBlue"];
-        }
-        Serial.print("New colorClockWord: ");
-        Serial.print("red: "); Serial.print(r);
-        Serial.print(", green: ");  Serial.print(g);
-        Serial.print(", blue: ");  Serial.println(b);
-        ledCtrl.setColor(LedCtrl::clockWord, r, g, b);
-
-        ledCtrl.forceUpdate = true;
+        setColorFromJson(jsonObj, false);
         request->send(200, "application/json", "{}");
       });
   server.addHandler(colorHandler);
@@ -497,8 +475,10 @@ void loop() {
       getTime(h, m);
 
       if(persistent.dim().active) {
-        uint8_t luma = brightness.getLuma();
-        ledCtrl.setLuma(luma);
+        uint8_t lumaScale = brightness.getLumaScale();
+        ledCtrl.setLumaScale(lumaScale);
+      } else {
+        ledCtrl.setLumaScale(255);
       }
 
       static bool wasWithinActTimeWindow = false;

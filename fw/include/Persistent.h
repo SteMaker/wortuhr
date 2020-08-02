@@ -4,10 +4,10 @@
 class Persistent {
   public:
     struct Color {
-      Color() { r=g=b=0; }
-      uint8_t r;
-      uint8_t g;
-      uint8_t b;
+      Color() { hue=sat=lumaOffset=0; }
+      uint8_t hue;
+      uint8_t sat;
+      sint8_t lumaOffset;
     };
 
     struct NightOff {
@@ -43,6 +43,7 @@ class Persistent {
       char wifiPwd[64]; // Max WPA2 Key: 63, plus \0
       int timeZoneOffset;
       bool dayLightSaving;
+      uint8_t luma;
       Color colorMinutesNumeral;
       Color colorMinWord;
       Color colorPreWord;
@@ -66,24 +67,25 @@ class Persistent {
       config.timeZoneOffset = 1; // CET
       config.dayLightSaving = false;
       // 0xff is too bright and draws too much current
-      config.colorMinutesNumeral.r = 50;
-      config.colorMinutesNumeral.g = 50;
-      config.colorMinutesNumeral.b = 0;
-      config.colorMinWord.r = 0;
-      config.colorMinWord.g = 0;
-      config.colorMinWord.b = 50;
-      config.colorPreWord.r = 50;
-      config.colorPreWord.g = 0;
-      config.colorPreWord.b = 0;
-      config.colorQuarterWord.r = 50;
-      config.colorQuarterWord.g = 50;
-      config.colorQuarterWord.b = 50;
-      config.colorHoursNumeral.r = 0;
-      config.colorHoursNumeral.g = 50;
-      config.colorHoursNumeral.b = 0;
-      config.colorClockWord.r = 50;
-      config.colorClockWord.g = 50;
-      config.colorClockWord.b = 50;
+      config.colorMinutesNumeral.hue = 42;
+      config.colorMinutesNumeral.sat = 255;
+      config.colorMinutesNumeral.lumaOffset = 0;
+      config.colorMinWord.hue = 170;
+      config.colorMinWord.sat = 255;
+      config.colorMinWord.lumaOffset = 0;
+      config.colorPreWord.hue = 0;
+      config.colorPreWord.sat = 255;
+      config.colorPreWord.lumaOffset = 0;
+      config.colorQuarterWord.hue = 0;
+      config.colorQuarterWord.sat = 0;
+      config.colorQuarterWord.lumaOffset = 0;
+      config.colorHoursNumeral.hue = 85;
+      config.colorHoursNumeral.sat = 255;
+      config.colorHoursNumeral.lumaOffset = 0;
+      config.colorClockWord.hue = 0;
+      config.colorClockWord.sat = 0;
+      config.colorClockWord.lumaOffset = 0;
+      config.luma = 25;
       config.nightOff.active = false;
       config.nightOff.offHour = 22;
       config.nightOff.offMinute = 30;
@@ -213,9 +215,15 @@ class Persistent {
           break;
       }
       interrupts();
-      Serial.print("color r: ");
-      Serial.println(c.r);
       return c;
+    }
+    void luma(uint8_t l) {
+      noInterrupts();
+      config.luma = l;
+      interrupts();
+    }
+    uint8_t luma(void) {
+      return config.luma;
     }
     void nightOff(NightOff n) {
       noInterrupts();
@@ -288,48 +296,50 @@ class Persistent {
       Serial.println(timeZoneOffset());
       Serial.print("dayLightSaving: ");
       Serial.println(dayLightSaving());
+      Serial.print("luma: ");
+      Serial.println(luma());
       Serial.println("colorMinutesNumeral:");
-      Serial.print("red: ");
-      Serial.print(color(minutesNumeral).r);
-      Serial.print(", green: ");
-      Serial.print(color(minutesNumeral).g);
-      Serial.print(", blue: ");
-      Serial.println(color(minutesNumeral).b);
+      Serial.print("hue: ");
+      Serial.print(color(minutesNumeral).hue);
+      Serial.print(", sat: ");
+      Serial.print(color(minutesNumeral).sat);
+      Serial.print(", lumaOffset: ");
+      Serial.println(color(minutesNumeral).lumaOffset);
       Serial.println("colorMinWord:");
-      Serial.print("red: ");
-      Serial.print(color(minWord).r);
-      Serial.print(", green: ");
-      Serial.print(color(minWord).g);
-      Serial.print(", blue: ");
-      Serial.println(color(minWord).b);
+      Serial.print("hue: ");
+      Serial.print(color(minWord).hue);
+      Serial.print(", sat: ");
+      Serial.print(color(minWord).sat);
+      Serial.print(", lumaOffset: ");
+      Serial.println(color(minWord).lumaOffset);
       Serial.println("colorPreWord:");
-      Serial.print("red: ");
-      Serial.print(color(preWord).r);
-      Serial.print(", green: ");
-      Serial.print(color(preWord).g);
-      Serial.print(", blue: ");
-      Serial.println(color(preWord).b);
+      Serial.print("hue: ");
+      Serial.print(color(preWord).hue);
+      Serial.print(", sat: ");
+      Serial.print(color(preWord).sat);
+      Serial.print(", lumaOffset: ");
+      Serial.println(color(preWord).lumaOffset);
       Serial.println("colorQuarterWord:");
-      Serial.print("red: ");
-      Serial.print(color(quarterWord).r);
-      Serial.print(", green: ");
-      Serial.print(color(quarterWord).g);
-      Serial.print(", blue: ");
-      Serial.println(color(quarterWord).b);
+      Serial.print("hue: ");
+      Serial.print(color(quarterWord).hue);
+      Serial.print(", sat: ");
+      Serial.print(color(quarterWord).sat);
+      Serial.print(", lumaOffset: ");
+      Serial.println(color(quarterWord).lumaOffset);
       Serial.println("colorHoursNumeral:");
-      Serial.print("red: ");
-      Serial.print(color(hoursNumeral).r);
-      Serial.print(", green: ");
-      Serial.print(color(hoursNumeral).g);
-      Serial.print(", blue: ");
-      Serial.println(color(hoursNumeral).b);
+      Serial.print("hue: ");
+      Serial.print(color(hoursNumeral).hue);
+      Serial.print(", sat: ");
+      Serial.print(color(hoursNumeral).sat);
+      Serial.print(", lumaOffset: ");
+      Serial.println(color(hoursNumeral).lumaOffset);
       Serial.println("colorClockWord:");
-      Serial.print("red: ");
-      Serial.print(color(clockWord).r);
-      Serial.print(", green: ");
-      Serial.print(color(clockWord).g);
-      Serial.print(", blue: ");
-      Serial.println(color(clockWord).b);
+      Serial.print("hue: ");
+      Serial.print(color(clockWord).hue);
+      Serial.print(", sat: ");
+      Serial.print(color(clockWord).sat);
+      Serial.print(", lumaOffset: ");
+      Serial.println(color(clockWord).lumaOffset);
       Serial.print("nightOff active: ");
       Serial.println(nightOff().active);
       Serial.print("nightOff offH: ");
