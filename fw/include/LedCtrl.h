@@ -219,7 +219,7 @@ class LedCtrl {
   int currentMinute = 61;
 
   CRGB leds[NUM_LEDS];
-  uint8_t lumaScale = 255;
+  uint8_t lumaScale = 128;
 
   uint8_t wordIndices[MAX_NUM_WORDS];       /**< the indices off all words to be shown */
   uint8_t prevWordIndices[MAX_NUM_WORDS];   /**< shadow of the indices to clear them in the next minute */
