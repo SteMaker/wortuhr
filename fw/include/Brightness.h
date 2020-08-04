@@ -50,7 +50,7 @@ class Brightness {
                 lightSensorType = sensorTypeTsl2561;
                 lightSensorTsl2651.begin();
                 lightSensorTsl2651.setGain(TSL2561_GAIN_16X);
-                lightSensorTsl2651.setTiming(TSL2561_INTEGRATIONTIME_13MS);
+                lightSensorTsl2651.setTiming(TSL2561_INTEGRATIONTIME_101MS);
                 break;
             default:
                 Serial.println("no I2C brightness sensor found!");
