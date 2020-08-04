@@ -14,6 +14,9 @@
 #include "html_cfg.h"
 #include "html_wifi_cfg.h"
 
+// window size for the moving average calculation for the measured brightness (less than 255)
+#define LUMA_SCALE_MOVING_AVG_WIN_SIZE    16
+
 enum Mode { MODE_INITIAL_CONFIG, MODE_NORMAL };
 
 /* VARIABLES */
@@ -474,8 +477,9 @@ void loop() {
       int m;
       getTime(h, m);
 
+      static uint16_t lumaScale = 255;
       if(persistent.dim().active) {
-        uint8_t lumaScale = brightness.getLumaScale();
+        lumaScale = (brightness.getLumaScale() + lumaScale * (LUMA_SCALE_MOVING_AVG_WIN_SIZE - 1)) / LUMA_SCALE_MOVING_AVG_WIN_SIZE;
         ledCtrl.setLumaScale(lumaScale);
       } else {
         ledCtrl.setLumaScale(255);

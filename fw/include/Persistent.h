@@ -66,7 +66,6 @@ class Persistent {
       strlcpy(config.wifiPwd, "", sizeof(config.wifiPwd));
       config.timeZoneOffset = 1; // CET
       config.dayLightSaving = false;
-      // 0xff is too bright and draws too much current
       config.colorMinutesNumeral.hue = 42;
       config.colorMinutesNumeral.sat = 255;
       config.colorMinutesNumeral.lumaOffset = 0;
