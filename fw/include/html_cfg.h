@@ -32,11 +32,18 @@ const char htmlCfg[] PROGMEM = R"=====(
     <p style="font-size:30px">
         {{ time }}
     </p>
+    <hr />
+    <h2>
+        Allgemein
+    </h2>
     <p>
-        <label>Host name der Wortuhr</label>
+        <label>Hostname der Wortuhr</label>
         <input type="text" v-model="hostname">
     </p>
     <hr />
+    <h2>
+        Zeit
+    </h2>
     <p>
         <label>Zeitzone / Stundenversatz</label>
         <input type="number" min="-24" max="+24" v-model="timeZoneOffset">
@@ -46,19 +53,86 @@ const char htmlCfg[] PROGMEM = R"=====(
         <input type="checkbox" v-model="dayLightSaving">
     </p>
     <hr />
+    <h2>
+        Farben
+    </h2>
+    <h3>
+        LED Grundhelligkeit
+    </h3>
     <p>
-        <label><span>LED Rotwert (0..255): {{ colorRed }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorRed" v-on:input="onColorChange($event)">
+        <label><span>LED Helligkeit(0..255): {{ luma }}</span></label>
+        <input type="range" min="0" max="255" v-model="luma" v-on:input="onColorChange($event)">
     </p>
+    <h3>
+        Minuten
+    </h3>
     <p>
-        <label><span>LED Grünwert (0..255): {{ colorGreen }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorGreen" v-on:input="onColorChange($event)">
+        <label><span>LED Farbwert (0..255): {{ colorMinutesNumeral.hue}}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinutesNumeral.hue" v-on:input="onColorChange($event)">
+        <label><span>LED Sättigung (0..255): {{ colorMinutesNumeral.sat}}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinutesNumeral.sat" v-on:input="onColorChange($event)">
+        <label><span>LED Helligkeitsanpassung(-64..64): {{ colorMinutesNumeral.lumaOffset}}</span></label>
+        <input type="range" min="-64" max="64" v-model="colorMinutesNumeral.lumaOffset" v-on:input="onColorChange($event)">
     </p>
+    <h3>
+        Wort MIN
+    </h3>
     <p>
-        <label><span>LED Blauwert (0..255): {{ colorBlue }}</span></label>
-        <input type="range" min="0" max="255" v-model="colorBlue" v-on:input="onColorChange($event)">
+        <label><span>LED Farbwert (0..255): {{ colorMinWord.hue}}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinWord.hue" v-on:input="onColorChange($event)">
+        <label><span>LED Sättigung(0..255): {{ colorMinWord.sat}}</span></label>
+        <input type="range" min="0" max="255" v-model="colorMinWord.sat" v-on:input="onColorChange($event)">
+        <label><span>LED Helligkeitsanpassung(-64..64): {{ colorMinWord.lumaOffset}}</span></label>
+        <input type="range" min="-64" max="64" v-model="colorMinWord.lumaOffset" v-on:input="onColorChange($event)">
+    </p>
+    <h3>
+        Wort VOR/NACH
+    </h3>
+    <p>
+        <label><span>LED Farbwert (0..255): {{ colorPreWord.hue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorPreWord.hue" v-on:input="onColorChange($event)">
+        <label><span>LED Sättigung (0..255): {{ colorPreWord.sat }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorPreWord.sat" v-on:input="onColorChange($event)">
+        <label><span>LED Helligkeitsanpassung(-64..64): {{ colorPreWord.lumaOffset}}</span></label>
+        <input type="range" min="-64" max="64" v-model="colorPreWord.lumaOffset" v-on:input="onColorChange($event)">
+    </p>
+    <h3>
+        Wort VIERTEL/HALB/DREIVIERTEL
+    </h3>
+    <p>
+        <label><span>LED Farbwert (0..255): {{ colorQuarterWord.hue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.hue" v-on:input="onColorChange($event)">
+        <label><span>LED Sättigung (0..255): {{ colorQuarterWord.sat }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorQuarterWord.sat" v-on:input="onColorChange($event)">
+        <label><span>LED Helligkeitsanpassung(-64..64): {{ colorQuarterWord.lumaOffset }}</span></label>
+        <input type="range" min="-64" max="64" v-model="colorQuarterWord.lumaOffset" v-on:input="onColorChange($event)">
+    </p>
+    <h3>
+        Stunde
+    </h3>
+    <p>
+        <label><span>LED Farbwert (0..255): {{ colorHoursNumeral.hue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorHoursNumeral.hue" v-on:input="onColorChange($event)">
+        <label><span>LED Sättigung (0..255): {{ colorHoursNumeral.sat }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorHoursNumeral.sat" v-on:input="onColorChange($event)">
+        <label><span>LED Helligkeitsanpassung(-64..64): {{ colorHoursNumeral.lumaOffset }}</span></label>
+        <input type="range" min="-64" max="64" v-model="colorHoursNumeral.lumaOffset" v-on:input="onColorChange($event)">
+    </p>
+    <h3>
+        Wort UHR
+    </h3>
+    <p>
+        <label><span>LED Farbwert (0..255): {{ colorClockWord.hue }}</span></label>
+        <input type="range" min="0" max="255" v-model="colorClockWord.hue" v-on:input="onColorChange($event)">
+        <label><span>LED Sättigung (0..255): {{ colorClockWord.sat}}</span></label>
+        <input type="range" min="0" max="255" v-model="colorClockWord.sat" v-on:input="onColorChange($event)">
+        <label><span>LED Helligkeitsanpassung(-64..64): {{ colorClockWord.lumaOffset }}</span></label>
+        <input type="range" min="-64" max="64" v-model="colorClockWord.lumaOffset" v-on:input="onColorChange($event)">
     </p>
     <hr />
+    <h2>
+        Helligkeit
+    </h2>
     <p>
         <label>Wortuhr in der Nacht abschalten</label>
         <input type="checkbox" v-model="nightOffActive">
@@ -71,7 +145,6 @@ const char htmlCfg[] PROGMEM = R"=====(
         <label>Einschaltzeit</label>
         <input type="time" v-model="nightOnTime">
     </p>
-    <hr />
     <p>
         <label>Dimmen nach Helligkeit</label>
         <input type="checkbox" v-model="dimActive">
@@ -96,9 +169,37 @@ const char htmlCfg[] PROGMEM = R"=====(
                 hostname: '',
                 timeZoneOffset: 0,
                 dayLightSaving: false,
-                colorRed: 255,
-                colorGreen: 255,
-                colorBlue: 255,
+                luma: 255,
+                colorMinutesNumeral: {
+                    hue: 42,
+                    sat: 255,
+                    lumaOffset: 0
+                },
+                colorMinWord: {
+                    hue: 170,
+                    sat: 255,
+                    lumaOffset: 0
+                },
+                colorPreWord: {
+                    hue: 0,
+                    sat: 255,
+                    lumaOffset: 0 
+                },
+                colorQuarterWord: {
+                    hue: 0,
+                    sat: 0,
+                    lumaOffset: 0
+                },
+                colorHoursNumeral: {
+                    hue: 85,
+                    sat: 255,
+                    lumaOffset: 0
+                },
+                colorClockWord: {
+                    hue: 0,
+                    sat: 0,
+                    lumaOffset: 0
+                },
                 nightOffActive: false,
                 nightOffTime: "22:00",
                 nightOnTime: "07:00",
@@ -111,9 +212,25 @@ const char htmlCfg[] PROGMEM = R"=====(
                 onColorChange() {
                     console.log("changing color");
                     axios.post('/color', {
-                        colorRed: cfgParams.colorRed,
-                        colorGreen: cfgParams.colorGreen,
-                        colorBlue: cfgParams.colorBlue
+                        luma: cfgParams.luma,
+                        colorMinutesNumeralHue: cfgParams.colorMinutesNumeral.hue,
+                        colorMinutesNumeralSat: cfgParams.colorMinutesNumeral.sat,
+                        colorMinutesNumeralLumaOffset: cfgParams.colorMinutesNumeral.lumaOffset,
+                        colorMinWordHue: cfgParams.colorMinWord.hue,
+                        colorMinWordSat: cfgParams.colorMinWord.sat,
+                        colorMinWordLumaOffset: cfgParams.colorMinWord.lumaOffset,
+                        colorPreWordHue: cfgParams.colorPreWord.hue,
+                        colorPreWordSat: cfgParams.colorPreWord.sat,
+                        colorPreWordLumaOffset: cfgParams.colorPreWord.lumaOffset,
+                        colorQuarterWordHue: cfgParams.colorQuarterWord.hue,
+                        colorQuarterWordSat: cfgParams.colorQuarterWord.sat,
+                        colorQuarterWordLumaOffset: cfgParams.colorQuarterWord.lumaOffset,
+                        colorHoursNumeralHue: cfgParams.colorHoursNumeral.hue,
+                        colorHoursNumeralSat: cfgParams.colorHoursNumeral.sat,
+                        colorHoursNumeralLumaOffset: cfgParams.colorHoursNumeral.lumaOffset,
+                        colorClockWordHue: cfgParams.colorClockWord.hue,
+                        colorClockWordSat: cfgParams.colorClockWord.sat,
+                        colorClockWordLumaOffset: cfgParams.colorClockWord.lumaOffset
                     })
                         .then(function (response) {
                             console.log(response);
@@ -144,9 +261,25 @@ const char htmlCfg[] PROGMEM = R"=====(
                         this.hostname = response.data.hostname;
                         this.timeZoneOffset = response.data.timeZoneOffset;
                         this.dayLightSaving = response.data.dayLightSaving;
-                        this.colorRed = response.data.colorRed;
-                        this.colorGreen = response.data.colorGreen;
-                        this.colorBlue = response.data.colorBlue;
+                        this.luma = response.data.luma;
+                        this.colorMinutesNumeral.hue =    response.data.colorMinutesNumeralHue;
+                        this.colorMinutesNumeral.sat =  response.data.colorMinutesNumeralSat;
+                        this.colorMinutesNumeral.lumaOffset =   response.data.colorMinutesNumeralLumaOffset;
+                        this.colorMinWord.hue =    response.data.colorMinWordHue;
+                        this.colorMinWord.sat =  response.data.colorMinWordSat;
+                        this.colorMinWord.lumaOffset =   response.data.colorMinWordLumaOffset;
+                        this.colorPreWord.hue =    response.data.colorPreWordHue;
+                        this.colorPreWord.sat =  response.data.colorPreWordSat;
+                        this.colorPreWord.lumaOffset =   response.data.colorPreWordLumaOffset;
+                        this.colorQuarterWord.hue =    response.data.colorQuarterWordHue;
+                        this.colorQuarterWord.sat =  response.data.colorQuarterWordSat;
+                        this.colorQuarterWord.lumaOffset =   response.data.colorQuarterWordLumaOffset;
+                        this.colorHoursNumeral.hue =    response.data.colorHoursNumeralHue;
+                        this.colorHoursNumeral.sat =  response.data.colorHoursNumeralSat;
+                        this.colorHoursNumeral.lumaOffset =   response.data.colorHoursNumeralLumaOffset;
+                        this.colorClockWord.hue =    response.data.colorClockWordHue;
+                        this.colorClockWord.sat =  response.data.colorClockWordSat;
+                        this.colorClockWord.lumaOffset =   response.data.colorClockWordLumaOffset;
                         this.nightOffActive = response.data.nightOffActive;
                         this.nightOffTime = noOffH + ":" + noOffM;
                         this.nightOnTime = noOnH + ":" + noOnM;
@@ -163,9 +296,25 @@ const char htmlCfg[] PROGMEM = R"=====(
               hostname: cfgParams.hostname,
               timeZoneOffset: cfgParams.timeZoneOffset,
               dayLightSaving: cfgParams.dayLightSaving,
-              colorRed: cfgParams.colorRed,
-              colorGreen: cfgParams.colorGreen,
-              colorBlue: cfgParams.colorBlue,
+              luma: cfgParams.luma,
+              colorMinutesNumeralHue: cfgParams.colorMinutesNumeral.hue,
+              colorMinutesNumeralSat: cfgParams.colorMinutesNumeral.sat,
+              colorMinutesNumeralLumaOffset: cfgParams.colorMinutesNumeral.lumaOffset,
+              colorMinWordHue: cfgParams.colorMinWord.hue,
+              colorMinWordSat: cfgParams.colorMinWord.sat,
+              colorMinWordLumaOffset: cfgParams.colorMinWord.lumaOffset,
+              colorPreWordHue: cfgParams.colorPreWord.hue,
+              colorPreWordSat: cfgParams.colorPreWord.sat,
+              colorPreWordLumaOffset: cfgParams.colorPreWord.lumaOffset,
+              colorQuarterWordHue: cfgParams.colorQuarterWord.hue,
+              colorQuarterWordSat: cfgParams.colorQuarterWord.sat,
+              colorQuarterWordLumaOffset: cfgParams.colorQuarterWord.lumaOffset,
+              colorHoursNumeralHue: cfgParams.colorHoursNumeral.hue,
+              colorHoursNumeralSat: cfgParams.colorHoursNumeral.sat,
+              colorHoursNumeralLumaOffset: cfgParams.colorHoursNumeral.lumaOffset,
+              colorClockWordHue: cfgParams.colorClockWord.hue,
+              colorClockWordSat: cfgParams.colorClockWord.sat,
+              colorClockWordLumaOffset: cfgParams.colorClockWord.lumaOffset,
               nightOffActive: cfgParams.nightOffActive,
               nightOffOffHour: parseInt(nightOffT[0]),
               nightOffOffMinute: parseInt(nightOffT[1]),
