@@ -160,9 +160,8 @@ class LedCtrl {
       FastLED.show();
   }
 
-  void showWlan(void) {
+  void showWlan(CRGB col = CRGB::Green) {
       Serial.println("showWlan");
-      CRGB col = CRGB::Green;
       col.nscale8_video(lumaScale);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_WLAN].pattern;

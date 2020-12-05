@@ -59,7 +59,7 @@ void setupForInitialConfig(void) {
   Serial.println(WiFi.softAPIP());
 
   ledCtrl.setup();
-  ledCtrl.showWlan();
+  ledCtrl.showWlan(CRGB::Blue);
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     Serial.println("Client connected");
