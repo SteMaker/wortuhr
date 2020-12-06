@@ -81,43 +81,46 @@ class LedCtrl {
     FastLED.addLeds<NEOPIXEL, LED_DATA_PIN>(leds, NUM_LEDS);
   }
 
-  void setColor(ColorType t, uint8_t r, uint8_t g, uint8_t b) {
+  void setColor(ColorType t, uint8_t hue, uint8_t sat, sint8_t lumaOffset, uint8_t _luma) {
+    sint16_t luma = _luma + lumaOffset;
+    if(luma < 0) luma = 0;
+    if(luma > 255) luma = 255;
+    CRGB c = CRGB(CHSV(hue, sat, (uint8_t)luma));
+    Serial.print("LedCtrl::setColor: r,g,b=");
+    Serial.print(c.r);
+    Serial.print(",");
+    Serial.print(c.g);
+    Serial.print(",");
+    Serial.println(c.b);
     switch (t) {
         case minutesNumeral:
-          colorMinutesNumeral = CRGB(r, g, b);
+          colorMinutesNumeral = c;
+          break;
         case minWord:
-          colorMinWord = CRGB(r, g, b);
+          colorMinWord = c;
+          break;
         case preWord:
-          colorPreWord = CRGB(r, g, b);
+          colorPreWord = c;
+          break;
         case quarterWord:
-          colorQuarterWord = CRGB(r, g, b);
+          colorQuarterWord = c;
+          break;
         case hoursNumeral:
-          colorHoursNumeral = CRGB(r, g, b);
+          colorHoursNumeral = c;
+          break;
         case clockWord:
-          colorClockWord = CRGB(r, g, b);
+          colorClockWord = c;
+          break;
       }
-
-// TODO: handle luma if necessary, or do we rely on the brightness sensor?
-//    ledColor.setRGB(r, g, b);
-//    luma = ledColor.getLuma();
-    Serial.print("LedCtrl::setColor: luma=");
-    Serial.println(luma);
-//    ledColor.maximizeBrightness();
-    Serial.print("LedCtrl::setColor: r,g,b=");
-    Serial.print(r);
-    Serial.print(",");
-    Serial.print(g);
-    Serial.print(",");
-    Serial.println(b);
   }
 
-  void setLuma(uint8_t _luma) {
-    if(_luma != luma) {
-      Serial.print("LedCtrl::setLuma: luma=");
-      Serial.println(luma);
+  void setLumaScale(uint8_t _lumaScale) {
+    if(_lumaScale != lumaScale) {
+      Serial.print("LedCtrl::setLumaScale: lumaScale=");
+      Serial.println(_lumaScale);
       forceUpdate = true;
     }
-    luma = _luma;
+    lumaScale = _lumaScale;
   }
 
   bool forceUpdate = false;
@@ -145,7 +148,7 @@ class LedCtrl {
   void showNoWlan(void) {
       Serial.println("showNoWlan");
       CRGB col = CRGB::DarkRed;
-//      col.nscale8_video(luma);
+      col.nscale8_video(lumaScale);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_NOWLAN].pattern;
       int letterCnt = 0;
@@ -158,10 +161,9 @@ class LedCtrl {
       FastLED.show();
   }
 
-  void showWlan(void) {
+  void showWlan(CRGB col = CRGB::Green) {
       Serial.println("showWlan");
-      CRGB col = CRGB::Green;
-//      col.nscale8_video(luma);
+      col.nscale8_video(lumaScale);
       clearClockLeds();
       const uint8_t *pattern = patterns[WORDIDX_WLAN].pattern;
       int letterCnt = 0;
@@ -259,7 +261,7 @@ class LedCtrl {
   int currentMinute = 61;
 
   CRGB leds[NUM_LEDS];
-  uint8_t luma;
+  uint8_t lumaScale = 128;
 
   uint8_t wordIndices[MAX_NUM_WORDS];       /**< the indices off all words to be shown */
   uint8_t prevWordIndices[MAX_NUM_WORDS];   /**< shadow of the indices to clear them in the next minute */
@@ -381,7 +383,7 @@ class LedCtrl {
       Serial.print(" ");
       // scale the brightness
       col = wordColor[wordCnt];
-//      col.nscale8_video(luma);
+      col.nscale8_video(lumaScale);
       // for each word we take the letters to be enabled and set the leds
       const uint8_t *pattern = patterns[wordIndices[wordCnt]].pattern;
       int letterCnt = 0;
