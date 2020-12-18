@@ -87,6 +87,10 @@ void setupForInitialConfig(void) {
     persistent.updateToFlash();
     ESP.restart();
   });
+
+  delay(1000);                  // show "WLAN" before displaying the IP
+  ledCtrl.showIp(local_IP);
+  ledCtrl.showWlan(CRGB::Blue); // show "WLAN" once again until the user finishes the configuration
 }
 
 void setColorFromJson(JsonObject &jsonObj, bool persist) {
