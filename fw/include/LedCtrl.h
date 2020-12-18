@@ -58,6 +58,7 @@ const WordPattern patterns[] = {
     {.pattern = {6, 15, 37, 38, 39, 40, 255}},       // NO WLAN
     {.pattern = {37, 38, 39, 40, 255}},              // WLAN
     {.pattern = {103, 255}},                         // D for DOT
+    {.pattern = {96, 101, 119, 114, 255}},           // N-U-L-L
 };
 
 class LedCtrl {
@@ -184,11 +185,11 @@ class LedCtrl {
       Serial.println(ip);
       for (uint8_t i=0; i<IP_OCTET_NUM; i++) {
         uint8_t octet = ip[i];
-        //Serial.printf("octet[%d]: %d\n", i, octet);
+        bool leadingNonZeroDigit = false;
         for (int8_t j=0; j<3; j++) {
           uint8_t digit = (octet / (uint8_t)(pow(10,2-j))) % 10;
-          //Serial.printf("digit %d: %d\n", j, digit);
           if (digit) {
+            leadingNonZeroDigit = true;
             clearClockLeds();
             prevWordIndices[0] = hourToWord(digit, false);
             const uint8_t *pattern = patterns[prevWordIndices[0]].pattern;
@@ -197,8 +198,20 @@ class LedCtrl {
               leds[pattern[letterCnt]] = ipColor[i];
               letterCnt++;
             }
-          FastLED.show();
-          delay(750);
+            FastLED.show();
+            delay(750);
+          } else if (leadingNonZeroDigit) {
+            /* a zero in the middle or end of an octet */
+            clearClockLeds();
+            prevWordIndices[0] = WORDIDX_NULL;
+            const uint8_t *pattern = patterns[prevWordIndices[0]].pattern;
+            int letterCnt = 0;
+            while (pattern[letterCnt] != 255) {
+              leds[pattern[letterCnt]] = ipColor[i];
+              letterCnt++;
+            }
+            FastLED.show();
+            delay(750);
           }
         }
         if (i<IP_OCTET_NUM-1) {
@@ -252,6 +265,7 @@ class LedCtrl {
     WORDIDX_NOWLAN = 30,
     WORDIDX_WLAN = 31,
     WORDIDX_DOT = 32,
+    WORDIDX_NULL = 33,
     WORDIDX_BASE_MIN = WORDIDX_M_EINE - 1,
     WORDIDX_BASE_HOUR = WORDIDX_H_EINS - 1,
     WORDIDX_STOP = 255,
