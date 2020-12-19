@@ -88,7 +88,7 @@ void setupForInitialConfig(void) {
     ESP.restart();
   });
 
-  delay(1000);                  // show "WLAN" before displaying the IP
+  delay(3000);                  // show "WLAN" before displaying the IP
   ledCtrl.showIp(local_IP);
   ledCtrl.showWlan(CRGB::Blue); // show "WLAN" once again until the user finishes the configuration
 }
@@ -288,6 +288,7 @@ void setupForNormal(void) {
         JSON_OBJECT_SIZE(30);  // adjust to the number of elements
     DynamicJsonDocument doc(capacity);
     doc["hostname"] = persistent.hostname().c_str();
+    doc["showIp"] = persistent.showIp();
     doc["timeZoneOffset"] = persistent.timeZoneOffset();
     doc["dayLightSaving"] = persistent.dayLightSaving();
     doc["luma"] = persistent.luma();
@@ -358,6 +359,12 @@ void setupForNormal(void) {
         } else {
           Serial.println("No hostname found");
         }
+        if (jsonObj.containsKey("showIp")) {
+          bool showIp = jsonObj["showIp"];
+          persistent.showIp(showIp);
+        } else {
+          Serial.println("No show IP found");
+        }
         if (jsonObj.containsKey("timeZoneOffset")) {
           int timeZoneOffset = jsonObj["timeZoneOffset"];
           persistent.timeZoneOffset(timeZoneOffset);
@@ -419,9 +426,12 @@ void setupForNormal(void) {
         request->send(200, "application/json", "{}");
       });
   server.addHandler(colorHandler);
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
-  ledCtrl.showIp(WiFi.localIP());
+
+  if (persistent.showIp()) {
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+    ledCtrl.showIp(WiFi.localIP());
+  }
 }
 
 void setup() {
