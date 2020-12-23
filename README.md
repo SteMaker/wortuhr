@@ -16,6 +16,9 @@ Als LED-Streifen werden WS2812 verwendet. Für jede der 11 Zeilen wird ein Strei
 
 Die Buchstabenmatrix habe ich mit einem 3D-Drucker ausgedruckt. Die STL-Dateien sowie die SVG-Basis liegen im Ordner `rahmen`. Es gibt eine Rückseite, in die die 11 LED-Streifen geklebt werden und eine Vorderseite mit den Aussparungen für die Buchstaben. Das Ganze kommt dann in einen Bilderrahmen. Der IKEA RIBBA 23x23 passt perfekt.
 
+Alternativ kann die Frontplatte aus lackiertem Acrylglas gelasert werden.
+
 ![Buchstabenmatrix](./pics/buchstabenmatrix.jpg "Buchstabenmatrix")
 
+![Wortuhr mit gelaserter Acrylfront](./pics/wortuhr_komplett_schwarz_wei%C3%9F.jpg)
 
