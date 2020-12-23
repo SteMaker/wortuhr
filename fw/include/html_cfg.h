@@ -40,6 +40,10 @@ const char htmlCfg[] PROGMEM = R"=====(
         <label>Hostname der Wortuhr</label>
         <input type="text" v-model="hostname">
     </p>
+    <p>
+        <label>IP-Adresse beim Start anzeigen:</label>
+        <input type="checkbox" v-model="showIp">
+    </p>
     <hr />
     <h2>
         Zeit
@@ -167,6 +171,7 @@ const char htmlCfg[] PROGMEM = R"=====(
             data: {
                 time: '00:00',
                 hostname: '',
+                showIp: false,
                 timeZoneOffset: 0,
                 dayLightSaving: false,
                 luma: 255,
@@ -259,6 +264,7 @@ const char htmlCfg[] PROGMEM = R"=====(
                         noOnH = response.data.nightOffOnHour.toString().padStart(2,'0');
                         noOnM = response.data.nightOffOnMinute.toString().padStart(2,'0');
                         this.hostname = response.data.hostname;
+                        this.showIp = response.data.showIp;
                         this.timeZoneOffset = response.data.timeZoneOffset;
                         this.dayLightSaving = response.data.dayLightSaving;
                         this.luma = response.data.luma;
@@ -294,6 +300,7 @@ const char htmlCfg[] PROGMEM = R"=====(
           var nightOnT = cfgParams.nightOnTime.split(":");
           axios.post('/config', {
               hostname: cfgParams.hostname,
+              showIp: cfgParams.showIp,
               timeZoneOffset: cfgParams.timeZoneOffset,
               dayLightSaving: cfgParams.dayLightSaving,
               luma: cfgParams.luma,
