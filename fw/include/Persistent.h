@@ -41,6 +41,7 @@ class Persistent {
       char hostname[16];
       char ssid[33]; // Max SSID length: 32, plus \0
       char wifiPwd[64]; // Max WPA2 Key: 63, plus \0
+      bool showIp;
       int timeZoneOffset;
       bool dayLightSaving;
       uint8_t luma;
@@ -64,6 +65,7 @@ class Persistent {
       strlcpy(config.hostname, "", sizeof(config.hostname));
       strlcpy(config.ssid, "", sizeof(config.ssid));
       strlcpy(config.wifiPwd, "", sizeof(config.wifiPwd));
+      config.showIp = true;   // always show the IP on a fresh clock
       config.timeZoneOffset = 1; // CET
       config.dayLightSaving = false;
       config.colorMinutesNumeral.hue = 42;
@@ -145,6 +147,14 @@ class Persistent {
       std::string t(config.wifiPwd);
       interrupts();
       return t;
+    }
+    void showIp(bool s) {
+      // writing a bool is atomic
+      config.showIp = s;
+    }
+    bool showIp(void) {
+      // reading a bool is atomic
+      return config.showIp;
     }
     void timeZoneOffset(int t) {
       // writing an int is atomic
@@ -250,12 +260,14 @@ class Persistent {
     void setup(void) {
       EEPROM.begin(sizeof(Config));
 
-      if (EEPROM.percentUsed() < 0) {
+      int eepPercentUsed = EEPROM.percentUsed();
+      if (eepPercentUsed < 0) {
         // If nothing has been written to the EEPROM yet, we need to initialize it
         Serial.println("Fresh EEPROM");
         setToDefaults();
         updateToFlash();
       } else {
+        Serial.printf("EEPROM usage: %d%%\n", eepPercentUsed);
         // Load the EEPROM
         EEPROM.get(0, config);
         if (!isConsistent()) {
@@ -291,6 +303,8 @@ class Persistent {
       Serial.print("wifiPwd: ");
       Serial.println("**********");
       //Serial.println(wifiPwd());
+      Serial.print("show IP: ");
+      Serial.println(showIp());
       Serial.print("timeZoneOffset: ");
       Serial.println(timeZoneOffset());
       Serial.print("dayLightSaving: ");
