@@ -43,7 +43,7 @@ class Persistent {
       char wifiPwd[64]; // Max WPA2 Key: 63, plus \0
       bool showIp;
       int timeZoneOffset;
-      bool dayLightSaving;
+      uint8_t dayLightSaving;
       uint8_t luma;
       Color colorMinutesNumeral;
       Color colorMinWord;
@@ -67,7 +67,7 @@ class Persistent {
       strlcpy(config.wifiPwd, "", sizeof(config.wifiPwd));
       config.showIp = true;   // always show the IP on a fresh clock
       config.timeZoneOffset = 1; // CET
-      config.dayLightSaving = false;
+      config.dayLightSaving = 0;
       config.colorMinutesNumeral.hue = 42;
       config.colorMinutesNumeral.sat = 255;
       config.colorMinutesNumeral.lumaOffset = 0;
@@ -164,12 +164,12 @@ class Persistent {
       // reading an int is atomic
       return config.timeZoneOffset;
     }
-    void dayLightSaving(bool d) {
-      // writing a bool is atomic
+    void dayLightSaving(uint8_t d) {
+      // writing a int is atomic
       config.dayLightSaving = d;
     }
-    bool dayLightSaving(void) {
-      // reading a bool is atomic
+    uint8_t dayLightSaving(void) {
+      // reading a int is atomic
       return config.dayLightSaving;
     }
     void color(ColorType t, Color c) {

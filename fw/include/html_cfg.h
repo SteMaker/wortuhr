@@ -54,7 +54,12 @@ const char htmlCfg[] PROGMEM = R"=====(
     </p>
     <p>
         <label>Sommerzeit</label>
-        <input type="checkbox" v-model="dayLightSaving">
+        <select v-model="dayLightSaving">
+            <option v-for="option in dstOptions" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Sommerzeit: {{ dayLightSaving }}</span>
     </p>
     <hr />
     <h2>
@@ -173,7 +178,12 @@ const char htmlCfg[] PROGMEM = R"=====(
                 hostname: '',
                 showIp: false,
                 timeZoneOffset: 0,
-                dayLightSaving: false,
+                dayLightSaving: 2,
+                dstOptions: [
+                    { text: 'nein', value: 0 },
+                    { text: 'ja',   value: 1 },
+                    { text: 'auto', value: 2 }
+                ],
                 luma: 255,
                 colorMinutesNumeral: {
                     hue: 42,

@@ -41,7 +41,13 @@ void notFound(AsyncWebServerRequest *request) {
 
 void getTime(int &h, int &m) {
     timeGetter.getTime(h, m);
-    h += persistent.timeZoneOffset() + (persistent.dayLightSaving() ? 1 : 0);
+    h += persistent.timeZoneOffset();
+    if (persistent.dayLightSaving() == 1) {   // manual DST
+      h += 1;
+    };
+    if (persistent.dayLightSaving() == 2) {   // automatic DST
+      h += timeGetter.getDst();
+    };
 }
 
 void setupForInitialConfig(void) {
@@ -285,7 +291,7 @@ void setupForNormal(void) {
   server.on("/config", HTTP_GET, [](AsyncWebServerRequest *request) {
     Serial.println("Configuration requested");
     const size_t capacity =
-        JSON_OBJECT_SIZE(30);  // adjust to the number of elements
+        JSON_OBJECT_SIZE(31);  // adjust to the number of elements
     DynamicJsonDocument doc(capacity);
     doc["hostname"] = persistent.hostname().c_str();
     doc["showIp"] = persistent.showIp();
@@ -372,7 +378,7 @@ void setupForNormal(void) {
           Serial.println("No time zone offset found");
         }
         if (jsonObj.containsKey("dayLightSaving")) {
-          bool dayLightSaving = jsonObj["dayLightSaving"];
+          uint8_t dayLightSaving = jsonObj["dayLightSaving"];
           persistent.dayLightSaving(dayLightSaving);
         } else {
           Serial.println("No day light saving found");

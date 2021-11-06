@@ -391,7 +391,7 @@ class LedCtrl {
 
     // We remember them for clearing one minute later
     memcpy(prevWordIndices, wordIndices, sizeof(prevWordIndices));
-    Serial.print("words to set: ");
+    Serial.print("  words to set: ");
     while (wordIndices[wordCnt] != WORDIDX_STOP) {
       Serial.print(wordIndices[wordCnt]);
       Serial.print(" ");
