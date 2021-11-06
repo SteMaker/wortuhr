@@ -4,6 +4,9 @@ const char htmlCfg[] PROGMEM = R"=====(
 <head>
     <meta name="viewport" content="width=device-width" , initial-scale="1">
     <meta charset="utf-8">
+    <link rel="icon" 
+          type="image/x-icon" 
+          href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAA9/8AAAAAAH9/fwD///8AAP8AAAAA/wD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERERERERERERERERERERERISEhITExMREREREREREREUFBQUFBISEREREREREREREhISEhISEhERERERERERERISEhUVFRUREREREREREREWFhYSEhISEREREREREREREhISEhISEhERERERERERERISEhAQEBAREREREREREREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
     <title>Wortuhr Konfiguration</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
