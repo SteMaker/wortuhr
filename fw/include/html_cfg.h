@@ -8,7 +8,7 @@ const char htmlCfg[] PROGMEM = R"=====(
           type="image/x-icon" 
           href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAA9/8AAAAAAH9/fwD///8AAP8AAAAA/wD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERERERERERERERERERERERISEhITExMREREREREREREUFBQUFBISEREREREREREREhISEhISEhERERERERERERISEhUVFRUREREREREREREWFhYSEhISEREREREREREREhISEhISEhERERERERERERISEhAQEBAREREREREREREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
     <title>Wortuhr Konfiguration</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <div id="wortuhrTop" class="title-bar">
