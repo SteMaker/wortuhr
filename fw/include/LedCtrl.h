@@ -80,6 +80,7 @@ class LedCtrl {
 
   void setup(void) {
     FastLED.addLeds<NEOPIXEL, LED_DATA_PIN>(leds, NUM_LEDS);
+    FastLED.setMaxRefreshRate(100);
   }
 
   void setColor(ColorType t, uint8_t hue, uint8_t sat, sint8_t lumaOffset, uint8_t _luma) {
@@ -135,6 +136,7 @@ class LedCtrl {
       clearClockLeds();
       setClockLeds(hour, minute);
       FastLED.show();
+      FastLED.show();
       currentHour = hour;
       currentMinute = minute;
       forceUpdate = false;
@@ -143,6 +145,7 @@ class LedCtrl {
 
   void clear(void) {
       clearClockLeds();
+      FastLED.show();
       FastLED.show();
   }
 
@@ -160,6 +163,7 @@ class LedCtrl {
       prevWordIndices[0] = WORDIDX_NOWLAN;
       prevWordIndices[1] = WORDIDX_STOP;
       FastLED.show();
+      FastLED.show();
   }
 
   void showWlan(CRGB col = CRGB::Green) {
@@ -174,6 +178,7 @@ class LedCtrl {
       }
       prevWordIndices[0] = WORDIDX_WLAN;
       prevWordIndices[1] = WORDIDX_STOP;
+      FastLED.show();
       FastLED.show();
   }
 
