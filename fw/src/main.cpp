@@ -259,6 +259,12 @@ void setupForNormal(void) {
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
+    if(factoryReset) {
+      factoryReset = false;
+      ledCtrl.clear();
+      persistent.factoryReset();
+      ESP.restart();
+    }
   }
   ledCtrl.showWlan();
   delay(1000);  // indicate the connection before switching to the time
@@ -444,6 +450,9 @@ void setup() {
     Serial.begin(115200);
     persistent.setup();
 
+    pinMode(14, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(14), cfgBtnPressed, FALLING);
+
     if (!strcmp(persistent.ssid().c_str(), "")) {
       setupForInitialConfig();
     } else {
@@ -452,9 +461,6 @@ void setup() {
 
     server.onNotFound(notFound);
     server.begin();
-
-    pinMode(14, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(14), cfgBtnPressed, FALLING);
 
     Serial.println("Setup done");
 }
