@@ -182,7 +182,7 @@ class LedCtrl {
 
   void testAllWords() {
       Serial.print("test all words");
-      for (int i = 0; i < 34; i++) {
+      for (unsigned int i = 0; i < (sizeof(patterns)/sizeof(patterns[0])); i++) {
             clearClockLeds();
             prevWordIndices[0] = i;
             const uint8_t *pattern = patterns[prevWordIndices[0]].pattern;
