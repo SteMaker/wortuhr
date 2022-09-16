@@ -180,6 +180,22 @@ class LedCtrl {
 #define IP_OCTET_NUM  4
   CRGB ipColor[IP_OCTET_NUM] = {CRGB::Red, CRGB::Green, CRGB::Blue, CRGB::Yellow};
 
+  void testAllWords() {
+      Serial.print("test all words");
+      for (int i = 0; i < 34; i++) {
+            clearClockLeds();
+            prevWordIndices[0] = i;
+            const uint8_t *pattern = patterns[prevWordIndices[0]].pattern;
+            int letterCnt = 0;
+            while (pattern[letterCnt] != 255) {
+              leds[pattern[letterCnt]] = ipColor[i % 4];
+              letterCnt++;
+            }
+            FastLED.show();
+            delay(1000);
+      }
+  }
+
   void showIp(IPAddress ip) {
       Serial.print("showIp: ");
       Serial.println(ip);

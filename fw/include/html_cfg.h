@@ -171,6 +171,7 @@ const char htmlCfg[] PROGMEM = R"=====(
     </p>
     <hr />
     <input type="button" id="btnSend" value="Speichern">
+    <input type="button" id="btnTest" value="LED-Test">
     </div>
     <script>
         Vue.config.devtools = true;
@@ -351,6 +352,14 @@ const char htmlCfg[] PROGMEM = R"=====(
                   console.log(error);
               });
         });
+
+        $('#btnTest').click(function(){
+            axios.get('/test')
+                .then((response) => {
+                    console.log('starting test sequence')
+                });
+        });
+
     </script
 </body>
 </html>
